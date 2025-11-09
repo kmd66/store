@@ -1,0 +1,6 @@
+@MizeBazi.Store.Api_HostAddress = http://localhost:5022
+
+GET {{MizeBazi.Store.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
