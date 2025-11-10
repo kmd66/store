@@ -1,0 +1,29 @@
+﻿
+dotnet tool install --global dotnet-ef --version 8.*
+dotnet ef migrations add AddDB --context StoreContext
+dotnet ef database update --context StoreContext
+
+-------------------------------------------------
+
+-------------------------------------------------
+
+Application/
+    Features/
+       ├── Commands/
+       └── Handlers/
+API/
+    ├── Logging/
+    ├── Caching/
+    └── Security/
+
+-------------------------------------------------
+
+EntityFrameworkCore
+MediatR
+FluentValidation
+Scrutor
+Serilog
+AspNetCoreRateLimit, 
+MemoryCache
+
+

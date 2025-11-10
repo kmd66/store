@@ -10,6 +10,10 @@ public static class Hash
 
     public static string GetDigitsFromString(this string input, int from, int to)
         => new string(input.Where(char.IsDigit).ToArray()).Substring(from, to);
+
+    public static string GenerateOrderNumber()
+        => $"ORD-{DateTime.UtcNow:yyyyMMdd}-{Guid.NewGuid().ToString("N").Substring(0, 8).ToUpper()}";
+
     public static string GetDigitsFromGuid()
         => Guid.NewGuid().ToString().GetDigitsFromString(0, 5);
 

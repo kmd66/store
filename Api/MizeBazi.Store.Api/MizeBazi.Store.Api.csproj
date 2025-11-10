@@ -8,6 +8,10 @@
 
   <ItemGroup>
     <PackageReference Include="AspNetCoreRateLimit" Version="5.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.21">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="8.0.1" />
     <PackageReference Include="Scrutor" Version="6.1.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="8.0.3" />
@@ -24,7 +28,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Core\MizeBazi.Store.Application\MizeBazi.Store.Application.csproj" />
     <ProjectReference Include="..\..\Core\MizeBazi.Store.Common\MizeBazi.Store.Common.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\MizeBazi.Store.Data\MizeBazi.Store.Data.csproj" />
   </ItemGroup>
 
 </Project>

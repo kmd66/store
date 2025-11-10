@@ -6,8 +6,7 @@ public static class ConfigurationRegistration
 {
     public static IConfiguration SetAppSetings(this IConfiguration config)
     {
-        AppSetings.WriteConnection = config.GetSection("ConnectionStrings:WriteConnection").Value;
-        AppSetings.ReadConnection = config.GetSection("ConnectionStrings:ReadConnection").Value;
+        AppSetings.SetConnection();
 
         AppSetings.JwtKey = config.GetSection("Jwt:Key").Value!;
         AppSetings.JwtIv = config.GetSection("Jwt:Iv").Value!;
