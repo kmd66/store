@@ -1,7 +1,7 @@
 ﻿
 using MizeBazi.Store.Common.Helper;
 
-namespace MizeBazi.Store.Api.Filters;
+namespace MizeBazi.Store.Api.Helper;
 public static class ConfigurationRegistration
 {
     public static IConfiguration SetAppSetings(this IConfiguration config)

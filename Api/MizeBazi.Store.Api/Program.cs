@@ -1,4 +1,4 @@
-using MizeBazi.Store.Api.Filters;
+using MizeBazi.Store.Api.Helper;
 
 var builder = WebApplication.CreateBuilder(args);
 
