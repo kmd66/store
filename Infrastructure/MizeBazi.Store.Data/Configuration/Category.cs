@@ -4,17 +4,11 @@ using MizeBazi.Store.Common.Shared;
 
 namespace MizeBazi.Store.Data.Entities;
 
-public class Category : SoftDeleteEntity
+internal class Category : DbCategory
 {
-    public string Name { get; set; }
-
-    public string Description { get; set; }
-
-    public string ImageUrl { get; set; }
-
     public ICollection<ProductCategory> ProductCategories { get; set; }
 }
-public class CategoryConfiguration : IEntityTypeConfiguration<Category>
+internal class CategoryConfiguration : IEntityTypeConfiguration<Category>
 {
     public void Configure(EntityTypeBuilder<Category> builder)
     {

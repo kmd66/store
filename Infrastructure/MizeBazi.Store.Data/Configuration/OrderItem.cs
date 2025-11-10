@@ -2,21 +2,13 @@
 using Microsoft.EntityFrameworkCore;
 
 namespace MizeBazi.Store.Data.Entities;
-public class OrderItem 
+internal class OrderItem : DbOrderItem
 {
-    public long OrderId { get; set; }
-
-    public long ProductId { get; set; }
-
-    public int Quantity { get; set; } //تعداد واحدهای یک محصول در سفارش
-
-    public decimal Price { get; set; } // قیمت در لحظه خرید
-
     public Order Order { get; set; }
     public Product Product { get; set; }
 }
 
-public class OrderItemConfiguration : IEntityTypeConfiguration<OrderItem>
+internal class OrderItemConfiguration : IEntityTypeConfiguration<OrderItem>
 {
     public void Configure(EntityTypeBuilder<OrderItem> builder)
     {

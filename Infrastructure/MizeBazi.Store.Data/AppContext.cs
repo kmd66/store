@@ -20,14 +20,14 @@ public class StoreContext : DbContext
         }
     }
 
-    public DbSet<Category> Categories { get; set; }
-    public DbSet<Brand> Brands { get; set; }
-    public DbSet<Product> Products { get; set; }
-    public DbSet<Cart> Carts { get; set; }
-    public DbSet<CartItem> CartItems { get; set; }
-    public DbSet<Order> Orders { get; set; }
-    public DbSet<OrderItem> OrderItems { get; set; }
-    public DbSet<Payment> Payments { get; set; }
+    internal DbSet<Category> Categories { get; set; }
+    internal DbSet<Brand> Brands { get; set; }
+    internal DbSet<Product> Products { get; set; }
+    internal DbSet<Cart> Carts { get; set; }
+    internal DbSet<CartItem> CartItems { get; set; }
+    internal DbSet<Order> Orders { get; set; }
+    internal DbSet<OrderItem> OrderItems { get; set; }
+    internal DbSet<Payment> Payments { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

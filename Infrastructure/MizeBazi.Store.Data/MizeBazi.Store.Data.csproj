@@ -34,6 +34,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\MizeBazi.Store.Common\MizeBazi.Store.Common.csproj" />
+    <ProjectReference Include="..\..\Core\MizeBazi.Store.Domain\MizeBazi.Store.Domain.csproj" />
   </ItemGroup>
 
 </Project>

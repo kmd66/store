@@ -1,22 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using MizeBazi.Store.Common.Shared;
-using System.ComponentModel.DataAnnotations;
+using MizeBazi.Store.Domain.Entities;
 
 namespace MizeBazi.Store.Data.Entities;
 
-public class Brand : SoftDeleteEntity
+internal class Brand : DbBrand
 {
-    public string Name { get; set; }
-
-    public string Description { get; set; }
-
-    public string LogoUrl { get; set; }
-
     public ICollection<Product> Products { get; set; }
 }
 
-public class BrandConfiguration : IEntityTypeConfiguration<Brand>
+internal class BrandConfiguration : IEntityTypeConfiguration<Brand>
 {
     public void Configure(EntityTypeBuilder<Brand> builder)
     {

@@ -29,7 +29,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\MizeBazi.Store.Application\MizeBazi.Store.Application.csproj" />
-    <ProjectReference Include="..\..\Core\MizeBazi.Store.Common\MizeBazi.Store.Common.csproj" />
     <ProjectReference Include="..\..\Infrastructure\MizeBazi.Store.Data\MizeBazi.Store.Data.csproj" />
   </ItemGroup>
 

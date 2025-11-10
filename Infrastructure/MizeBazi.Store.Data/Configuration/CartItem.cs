@@ -4,19 +4,13 @@ using MizeBazi.Store.Common.Shared;
 
 namespace MizeBazi.Store.Data.Entities;
 
-public class CartItem 
+internal class CartItem : DbCartItem
 {
-    public long CartId { get; set; }
-
-    public long ProductId { get; set; }
-
-    public int Quantity { get; set; } = 1;
-    
     public Cart Cart { get; set; }
     public Product Product { get; set; }
 }
 
-public class CartItemConfiguration : IEntityTypeConfiguration<CartItem>
+internal class CartItemConfiguration : IEntityTypeConfiguration<CartItem>
 {
     public void Configure(EntityTypeBuilder<CartItem> builder)
     {

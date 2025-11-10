@@ -33,7 +33,7 @@ public class JwtHelper
     }
     private string code(Jwt model)
     {
-        string jsonString = System.Text.Json.JsonSerializer.Serialize(model);
+        string jsonString = model.ToJson();
         return jsonString.AesEncrypt(AppSetings.JwtKey, AppSetings.JwtIv);
     }
 
@@ -43,8 +43,8 @@ public class JwtHelper
         {
             if (token.IsNullOrEmpty())
                 return null;
-
-            var model = System.Text.Json.JsonSerializer.Deserialize<Jwt>(token.AesDecrypt(AppSetings.JwtKey, AppSetings.JwtIv));
+            var aesDecrypt = token.AesDecrypt(AppSetings.JwtKey, AppSetings.JwtIv);
+            var model = aesDecrypt.JsonToObject<Jwt>();
             if (model.Expiry < DateTime.Now)
                 return null;
             return model;

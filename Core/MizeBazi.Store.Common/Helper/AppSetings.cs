@@ -15,7 +15,7 @@ public static class AppSetings
                 if (File.Exists(configPath))
                 {
                     var jsonContent = File.ReadAllText(configPath);
-                    var jsonData = JsonSerializer.Deserialize<JsonElement>(jsonContent);
+                    var jsonData = jsonContent.JsonToObject<JsonElement>();
 
                     WriteConnection = jsonData.GetProperty("WriteConnection").GetString();
                     ReadConnection = jsonData.GetProperty("ReadConnection").GetString();

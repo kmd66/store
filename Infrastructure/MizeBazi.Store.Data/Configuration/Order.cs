@@ -5,27 +5,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MizeBazi.Store.Data.Entities;
 
-public class Order : SoftDeleteEntity
+internal class Order : DbOrder
 {
-    public string OrderNumber { get; set; } = Hash.GenerateOrderNumber();
-    public long UserId { get; set; }
-    public string CustomerEmail { get; set; }
-    public string CustomerPhone { get; set; }
-
-    public decimal TotalAmount { get; set; }
-
-    public OrderStatus Status { get; set; } = OrderStatus.Pending;
-    public PaymentStatus PaymentStatus { get; set; } = PaymentStatus.Pending;
-
-    // آدرس سفارش
-    public string ShippingAddress { get; set; }
-    public string ShippingCity { get; set; }
-    public string ShippingPostalCode { get; set; }
-
     public ICollection<OrderItem> OrderItems { get; set; }
     public Payment Payment { get; set; }
 }
-public class OrderConfiguration : IEntityTypeConfiguration<Order>
+internal class OrderConfiguration : IEntityTypeConfiguration<Order>
 {
     public void Configure(EntityTypeBuilder<Order> builder)
     {

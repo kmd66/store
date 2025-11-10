@@ -17,4 +17,8 @@
     <Folder Include="Behaviors\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MizeBazi.Store.Domain\MizeBazi.Store.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

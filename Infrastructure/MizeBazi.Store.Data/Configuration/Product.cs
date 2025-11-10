@@ -4,35 +4,15 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 
 namespace MizeBazi.Store.Data.Entities;
-public class Product : SoftDeleteEntity
+internal class Product : DbProduct
 {
-    public string Name { get; set; }
-    public string Images { get; set; } // JSON array of image URLs
-
-    public decimal Price { get; set; }
-
-    public decimal CompareAtPrice { get; set; }
-
-    public string Description { get; set; }
-
-    public int StockQuantity { get; set; } //موجودی انبار
-
-    public string SKU { get; set; } // کد کالا
-
-    public bool IsPublished { get; set; } //وضعیت انتشار
-
-    // Brand - یک برند
-    public long BrandId { get; set; }
-
     public Brand Brand { get; set; }
-
-    // دسته‌بندی‌ها - چند به چند
     public ICollection<ProductCategory> ProductCategories { get; set; }
     public ICollection<CartItem> CartItems { get; set; }
     public ICollection<OrderItem> OrderItems { get; set; }
 }
 
-public class ProductConfiguration : IEntityTypeConfiguration<Product>
+internal class ProductConfiguration : IEntityTypeConfiguration<Product>
 {
     public void Configure(EntityTypeBuilder<Product> builder)
     {

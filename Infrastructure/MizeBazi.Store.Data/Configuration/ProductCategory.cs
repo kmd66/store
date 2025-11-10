@@ -3,16 +3,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MizeBazi.Store.Data.Entities;
 
-public class ProductCategory
+internal class ProductCategory: DbProductCategory
 {
-    public long ProductId { get; set; }
-    public long CategoryId { get; set; }
-
     public Product Product { get; set; }
     public Category Category { get; set; }
 }
 
-public class ProductCategoryConfiguration : IEntityTypeConfiguration<ProductCategory>
+internal class ProductCategoryConfiguration : IEntityTypeConfiguration<ProductCategory>
 {
     public void Configure(EntityTypeBuilder<ProductCategory> builder)
     {

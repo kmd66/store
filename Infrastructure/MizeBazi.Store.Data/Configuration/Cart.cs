@@ -1,21 +1,16 @@
-﻿
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using MizeBazi.Store.Common.Shared;
+﻿using MizeBazi.Store.Common.Shared;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 
 namespace MizeBazi.Store.Data.Entities;
 
-public class Cart : BaseEntity
+internal class Cart : DbCart
 {
-    public long UserId { get; set; } 
-
     public ICollection<CartItem> CartItems { get; set; }
 
 }
 
-public class CartConfiguration : IEntityTypeConfiguration<Cart>
+internal class CartConfiguration : IEntityTypeConfiguration<Cart>
 {
     public void Configure(EntityTypeBuilder<Cart> builder)
     {
