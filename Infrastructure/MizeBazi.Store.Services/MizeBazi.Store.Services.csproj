@@ -14,4 +14,8 @@
     <PackageReference Include="Coravel" Version="6.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\MizeBazi.Store.Common\MizeBazi.Store.Common.csproj" />
+  </ItemGroup>
+
 </Project>

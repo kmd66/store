@@ -5,4 +5,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\MizeBazi.Store.Common\MizeBazi.Store.Common.csproj" />
+  </ItemGroup>
+
 </Project>
