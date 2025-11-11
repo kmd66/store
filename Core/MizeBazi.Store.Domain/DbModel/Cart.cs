@@ -1,7 +1,7 @@
 ﻿
 using MizeBazi.Store.Common.Shared;
 
-namespace MizeBazi.Store.Data.Entities;
+namespace MizeBazi.Store.Data;
 
 public class DbCart : BaseEntity
 {

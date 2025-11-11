@@ -1,6 +1,6 @@
 ﻿using MizeBazi.Store.Common.Shared;
 
-namespace MizeBazi.Store.Domain.Entities;
+namespace MizeBazi.Store.Domain;
 
 public class DbBrand : SoftDeleteEntity
 {

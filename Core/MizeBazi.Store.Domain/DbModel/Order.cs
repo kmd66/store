@@ -1,7 +1,7 @@
 ﻿using MizeBazi.Store.Common.Shared;
 using MizeBazi.Store.Common.Helper;
 
-namespace MizeBazi.Store.Data.Entities;
+namespace MizeBazi.Store.Data;
 
 public class DbOrder : SoftDeleteEntity
 {

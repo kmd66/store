@@ -1,4 +1,4 @@
-﻿namespace MizeBazi.Store.Data.Entities;
+﻿namespace MizeBazi.Store.Data;
 
 public class DbProductCategory
 {
