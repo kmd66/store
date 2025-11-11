@@ -1,6 +1,5 @@
 ﻿namespace MizeBazi.Store.Common.Shared;
 
-
 public enum UserRoles : byte
 {
     Guest = 0,
