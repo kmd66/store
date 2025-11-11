@@ -1,6 +1,6 @@
 ﻿using MizeBazi.Store.Common.Shared;
 
-namespace MizeBazi.Store.Data;
+namespace MizeBazi.Store.Domain;
 
 public class DbCategory : SoftDeleteEntity
 {

@@ -1,7 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
-using MizeBazi.Store.Common.Shared;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
+using MizeBazi.Store.Domain;
 
 namespace MizeBazi.Store.Data.Entities;
 internal class Product : DbProduct

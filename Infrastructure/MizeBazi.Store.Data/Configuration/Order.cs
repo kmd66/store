@@ -1,7 +1,6 @@
-﻿using MizeBazi.Store.Common.Shared;
-using MizeBazi.Store.Common.Helper;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
+using MizeBazi.Store.Domain;
 
 namespace MizeBazi.Store.Data.Entities;
 

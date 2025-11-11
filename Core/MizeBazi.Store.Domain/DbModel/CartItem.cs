@@ -1,4 +1,4 @@
-﻿namespace MizeBazi.Store.Data;
+﻿namespace MizeBazi.Store.Domain;
 
 public class DbCartItem 
 {

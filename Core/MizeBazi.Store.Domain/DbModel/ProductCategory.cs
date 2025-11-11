@@ -1,5 +1,4 @@
-﻿namespace MizeBazi.Store.Data;
-
+﻿namespace MizeBazi.Store.Domain;
 public class DbProductCategory
 {
     public long ProductId { get; set; }
