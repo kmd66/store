@@ -1,4 +1,6 @@
-﻿namespace MizeBazi.Store.Common.Shared;
+﻿using MizeBazi.Store.Common.Abstractions;
+
+namespace MizeBazi.Store.Common.Shared;
 
 public static class ServiceLocator
 {
@@ -9,7 +11,7 @@ public static class ServiceLocator
         _provider = provider;
     }
 
-    public static IServiceProvider Dispatcher =>
-        (IServiceProvider)(_provider?.GetService(typeof(IServiceProvider))
+    public static IEventDispatcher Dispatcher =>
+        (IEventDispatcher)(_provider?.GetService(typeof(IEventDispatcher))
         ?? throw new InvalidOperationException("ServiceLocator not configured."));
 }

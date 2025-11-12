@@ -14,6 +14,7 @@ public static class DependencyInjection
 
 
         services.AddScoped<IEventDispatcher, EventDispatcher>();
+        services.AddScoped<AutoEventDispatcher>();
         services.AddSingleton<IMessageBus, RabbitMQMessageBus>();
 
         return services;

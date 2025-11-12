@@ -4,11 +4,16 @@ namespace MizeBazi.Store.Common.Shared;
 
 public abstract class  Entity
 {
-    private readonly List<DomainEvent> _listEvents = new();
-    private bool IsConfirmed  = false;
+    protected readonly List<DomainEvent> _listEvents = new();
+    protected bool IsConfirmed  = false;
 
     public List<DomainEvent> DomainEvents() => _listEvents;
-    public void Confirm() => IsConfirmed = true;
+
+    public virtual void Confirm()
+    {
+        IsConfirmed = true;
+    }
+
     public void ClearDomainEvents() => _listEvents.Clear();
 
 }

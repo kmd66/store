@@ -1,7 +1,7 @@
 ﻿namespace MizeBazi.Store.Common.Helper;
 public static class QueryExtention
 {
-    public static string Query(this string? s)
+    public static string Query(this string s)
     {
         if (string.IsNullOrEmpty(s))
             return "NULL";
