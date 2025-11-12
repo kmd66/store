@@ -8,7 +8,7 @@ public class BrandWrite : IBrandWrite
 {
     public Task<Result> AddAsync(DbBrand brand)
     {
-        throw new NotImplementedException();
+        return Result.SuccessfulAsync();
     }
 }
 

@@ -8,6 +8,6 @@ public class BrandRead : IBrandRead
 {
     public Task<Result<DbBrand>> GetAsync(long id)
     {
-        throw new NotImplementedException();
+        return Result<DbBrand>.SuccessfulAsync(data:new DbBrand());
     }
 }
