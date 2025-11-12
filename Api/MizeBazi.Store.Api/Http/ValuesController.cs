@@ -1,22 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Mvc;
+using MizeBazi.Store.Api.Helper;
 using MizeBazi.Store.Application;
+using MizeBazi.Store.Common.Abstractions;
 using MizeBazi.Store.Common.Shared;
 
 namespace MizeBazi.Store.Api.Http;
 
-[Route("api/[controller]")]
 [ApiController]
 public class ValuesController : ControllerBase
 {
-    private readonly AutoEventDispatcher _dispatcher;
 
-    public ValuesController(AutoEventDispatcher dispatcher)
+    [HttpPost("api/Create")]
+    public async Task<IActionResult> Create(
+        [FromBody] CreateProductCommand command,
+        [FromServices] IAppMediator mediator
+    )
     {
-        _dispatcher = dispatcher;
-    }
-    [HttpPost]
-    public void Post([FromBody] string value)
-    {
-        new OrderService(_dispatcher).ConfirmOrder(new Domain.DbBrand());
+        var id = await mediator.Send(command);
+        return Ok(new { Id = id });
     }
 }

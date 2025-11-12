@@ -1,4 +1,4 @@
-﻿using MizeBazi.Store.Common.Abstractions;
+﻿ using MizeBazi.Store.Common.Abstractions;
 using MizeBazi.Store.Domain;
 
 namespace MizeBazi.Store.Application;

@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Abstractions\class\" />
     <Folder Include="Constants\" />
   </ItemGroup>
 
