@@ -1,7 +1,9 @@
-﻿
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using MizeBazi.Store.Common.Abstractions;
 using MizeBazi.Store.Common.Helper;
+using MizeBazi.Store.Common.Shared;
 using MizeBazi.Store.Data;
+using MizeBazi.Store.Services;
 
 namespace MizeBazi.Store.Api.Helper;
 public static class DependencyInjection
@@ -10,6 +12,9 @@ public static class DependencyInjection
     {
         EfDependency(services);
 
+
+        services.AddScoped<IEventDispatcher, EventDispatcher>();
+        services.AddSingleton<IMessageBus, RabbitMQMessageBus>();
 
         return services;
     }
