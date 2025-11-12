@@ -9,7 +9,7 @@ public abstract class  Entity
 
     public List<DomainEvent> DomainEvents() => _listEvents;
 
-    public virtual void Confirm()
+    public virtual void Confirm(EventType t)
     {
         IsConfirmed = true;
     }

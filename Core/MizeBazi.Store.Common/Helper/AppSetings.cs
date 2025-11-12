@@ -10,7 +10,8 @@ public static class AppSetings
             try
             {
                 
-                var configPath = Path.Combine(Directory.GetCurrentDirectory(), "connection.json");
+                //var configPaths = Path.Combine(Directory.GetCurrentDirectory(), "connection.json");
+                var configPath = Path.Combine(AppContext.BaseDirectory, "connection.json");
 
                 if (File.Exists(configPath))
                 {

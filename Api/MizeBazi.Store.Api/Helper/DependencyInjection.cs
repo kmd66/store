@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MizeBazi.Store.Application;
 using MizeBazi.Store.Common.Abstractions;
 using MizeBazi.Store.Common.Helper;
 using MizeBazi.Store.Common.Shared;
 using MizeBazi.Store.Data;
+using MizeBazi.Store.Domain;
 using MizeBazi.Store.Services;
 
 namespace MizeBazi.Store.Api.Helper;
@@ -13,8 +15,11 @@ public static class DependencyInjection
         EfDependency(services);
 
 
+        services.AddTransient<IDomainEventHandler<OrderConfirmedEvent>, OrderConfirmedEventHandler>();
+
         services.AddScoped<IEventDispatcher, EventDispatcher>();
         services.AddScoped<AutoEventDispatcher>();
+
         services.AddSingleton<IMessageBus, RabbitMQMessageBus>();
 
         return services;

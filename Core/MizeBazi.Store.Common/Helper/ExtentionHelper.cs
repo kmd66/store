@@ -1,4 +1,5 @@
 ﻿using System.IO.Compression;
+using System.Reflection;
 
 namespace MizeBazi.Store.Common.Helper;
 public static class ExtentionHelper
@@ -28,6 +29,11 @@ public static class ExtentionHelper
 
     public static T JsonToObject<T>(this string s)
         => System.Text.Json.JsonSerializer.Deserialize<T>(s);
+    public static T JsonMapObject<T>(this object o)
+    {
+        var json = o.ToJson();
+        return json.JsonToObject<T>();
+    }
 
     public static string EnumToString<T>(this T enumValue) where T : Enum
     {

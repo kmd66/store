@@ -7,6 +7,9 @@ namespace MizeBazi.Store.Data;
 
 public class StoreContext : DbContext
 {
+    public StoreContext(DbContextOptions<StoreContext> options) : base(options)
+    {
+    }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)

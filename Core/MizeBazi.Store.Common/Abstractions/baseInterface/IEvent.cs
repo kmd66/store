@@ -8,7 +8,6 @@ public interface IEventDispatcher
     /// <summary>
     /// اطلاع‌رسانی به هندلرهای داخلی 
     /// </summary>
-    Task DispatchLocalAsync(List<DomainEvent> domainEvent);
     Task DispatchLocalAsync<TEvent>(TEvent domainEvent);
 
     /// <summary>
@@ -19,7 +18,7 @@ public interface IEventDispatcher
 
 public abstract class DomainEvent
 {
-    public DateTime OccurredOn { get; } = DateTime.UtcNow;
+    public DateTime Date { get; } = DateTime.UtcNow;
 }
 public interface IDomainEventHandler<T>
 {

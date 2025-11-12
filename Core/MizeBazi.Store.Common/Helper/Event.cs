@@ -6,13 +6,9 @@ public class EventDispatcher(IServiceProvider serviceProvider) : IEventDispatche
 {
     private readonly IServiceProvider _serviceProvider = serviceProvider;
 
-    public Task DispatchLocalAsync(List<DomainEvent> domainEvent)
-    {
-        throw new NotImplementedException();
-    }
-
     public async Task DispatchLocalAsync<TEvent>(TEvent domainEvent)
     {
+        var t = typeof(TEvent);
         var handlerType = typeof(IDomainEventHandler<>).MakeGenericType(typeof(TEvent));
         var handlers = (IEnumerable<object>)_serviceProvider.GetService(typeof(IEnumerable<>).MakeGenericType(handlerType));
 
@@ -37,11 +33,17 @@ public class AutoEventDispatcher
         _dispatcher = dispatcher;
     }
 
-    public async Task ExecuteEvents<T>(Entity obj)
+    public async Task ExecuteEvents(Entity obj, EventType t)
     {
-        if(obj == null) return;
-        obj.Confirm();
-        await _dispatcher.DispatchLocalAsync(obj.DomainEvents());
+        if (obj == null) return;
+        obj.Confirm(t);
+        var domainEvents = obj.DomainEvents();
+        foreach (var domainEvent in domainEvents)
+        {
+            dynamic dynamicEvent = domainEvent;
+            await _dispatcher.DispatchLocalAsync(dynamicEvent);
+        }
         obj.ClearDomainEvents();
     }
+
 }
