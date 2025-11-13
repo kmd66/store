@@ -33,11 +33,18 @@ public static class AppSetings
             }
         }
     }
-
     public static string WriteConnection { get; set; }
     public static string ReadConnection { get; set; }
+
+    public static string CreateRoomKey { get; set; }
     public static string JwtKey { get; set; }
     public static string JwtIv { get; set; }
     public static int AccessTokenTime { get; set; }
+
+    public static string UrlApi { get; set; }
+    public static int ApiPort { get; set; }
+    public static int GrpcPort { get; set; }
+    public static string GrpcGgateway { get; set; }
+    public static string UrlGateway { get; set; }
 
 }

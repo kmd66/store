@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+option csharp_namespace = "MizeBazi.Store.Services";
+
+package user;
+
+service UserGrpc{
+  //rpc Login(LoginRequest) returns (LoginResponse);
+  rpc TokenDecode(DataToken) returns (DataJwt);
+}
+
+message DataToken {
+  string token = 1;
+}
+
+message DataJwt {
+  string id = 1;
+  int64 user_id = 2;
+  int32 roles = 3;
+  DataResult result= 4;
+}
+
+message DataResult{
+  bool success = 1;
+  int32 code = 2;
+  string message = 3;
+}
