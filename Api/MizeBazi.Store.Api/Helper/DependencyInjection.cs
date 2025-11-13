@@ -13,6 +13,8 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
+        services.AddSingleton<ICacheService, MemoryCacheService>();
+
         EfDependency(services);
 
         // ثبت MediatR فقط در WebAPI
@@ -46,7 +48,6 @@ public static class DependencyInjection
         services.AddScoped<AutoEventDispatcher>();
 
         services.AddSingleton<IMessageBus, RabbitMQMessageBus>();
-
         return services;
     }
     private static void EfDependency(IServiceCollection services)
