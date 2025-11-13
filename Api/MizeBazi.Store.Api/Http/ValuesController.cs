@@ -8,8 +8,9 @@ using MizeBazi.Store.Common.Shared;
 namespace MizeBazi.Store.Api.Http;
 
 [ApiController]
-public class ValuesController : ControllerBase
+public class ValuesController(IAppLogger<ValuesController> logger) : ControllerBase
 {
+    private readonly IAppLogger<ValuesController> _logger = logger;
 
     [HttpPost("api/Create")]
     public async Task<IActionResult> Create(
@@ -17,6 +18,7 @@ public class ValuesController : ControllerBase
         [FromServices] IAppMediator mediator
     )
     {
+        _logger.LogInformation("Create {Time}", DateTime.UtcNow);
         var id = await mediator.Send(command);
         return Ok(new { Id = id });
     }
@@ -26,6 +28,7 @@ public class ValuesController : ControllerBase
         [FromServices] ICacheService cacheService
     )
     {
+        _logger.LogInformation("Grpca {Time}", DateTime.UtcNow);
         //var t = await new UserGrpcService().CheckToken(token);
 
         var model = new Jwt
@@ -40,7 +43,8 @@ public class ValuesController : ControllerBase
         ).ToList();
         if (tokens.Count > 0)
         {
-            foreach(var t in tokens) cacheService.Remove(t.Key);
+            _logger.LogError($"Grpca LogWarning tokens.Count : {tokens.Count}");
+            foreach (var t in tokens) cacheService.Remove(t.Key);
         }
 
         var cacheModel = new CacheInMemoryRecord(Guid.NewGuid(), model.Id, model.UserId, model.Role);
@@ -50,6 +54,7 @@ public class ValuesController : ControllerBase
         
         cacheService.TryGetValue<CacheInMemoryRecord>("token", cacheModel.Id, out var lastCallTime);
 
+        _logger.LogWarning($"Grpca LogWarning, cacheModel.Id {cacheModel.Id}");
         return Ok(lastCallTime);
     }
 }

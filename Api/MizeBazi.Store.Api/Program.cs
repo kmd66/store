@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddMemoryCache();
 
 builder.Configuration.SetAppSetings();
+builder.SetLogRegistration();
 builder.Services.AddServices();
 builder.SetGrpc();
 
