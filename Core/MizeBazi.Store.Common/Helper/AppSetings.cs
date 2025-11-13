@@ -33,6 +33,8 @@ public static class AppSetings
             }
         }
     }
+    public static bool IsDevelopment { get; set; }
+
     public static string WriteConnection { get; set; }
     public static string ReadConnection { get; set; }
 

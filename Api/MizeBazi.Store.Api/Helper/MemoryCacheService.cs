@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
 using MizeBazi.Store.Common.Abstractions;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 
 namespace MizeBazi.Store.Api.Helper;
 
@@ -38,6 +37,7 @@ public class MemoryCacheService : ICacheService
     }
 
     public bool TryGetValue<T>(string group, Guid key, out T value)=> _cache.TryGetValue($"{group}_{key}", out value);
+    public bool TryGetValue<T>(string group, string key, out T value)=> _cache.TryGetValue($"{group}_{key}", out value);
 
     public void Remove(string k)
     {

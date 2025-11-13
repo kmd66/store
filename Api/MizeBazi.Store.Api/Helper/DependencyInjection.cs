@@ -1,10 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MizeBazi.Store.Application;
+using MizeBazi.Store.Api.Middleware;
 using MizeBazi.Store.Common.Abstractions;
 using MizeBazi.Store.Common.Helper;
 using MizeBazi.Store.Common.Shared;
 using MizeBazi.Store.Data;
-using MizeBazi.Store.Domain;
 using MizeBazi.Store.Services;
 using System.Reflection;
 
@@ -48,6 +47,7 @@ public static class DependencyInjection
 
         services.AddScoped<IAppMediator, MediatorAdapter>();
         services.AddScoped<AutoEventDispatcher>();
+        services.AddScoped<AuthFilter>();
 
         services.AddSingleton<IMessageBus, RabbitMQMessageBus>();
         return services;
