@@ -1,4 +1,7 @@
-﻿namespace MizeBazi.Store.Common.Shared;
+﻿using MizeBazi.Store.Common.Constants;
+using MizeBazi.Store.Common.Helper;
+
+namespace MizeBazi.Store.Common.Shared;
 
 public record ExceptionRecord(bool success, string message, int code, int totalCount);
 
@@ -32,3 +35,13 @@ public class AppTimeoutException : Exception
     public static ExceptionRecord Response() => AppException.Response("زمان درخواست به پایان رسید", 408);
 }
 //----------------
+public class DbException : Exception
+{
+    public DbException(string message = "") : base(message) { }
+    public static ExceptionRecord Response(string message) => AppException.Response(AppSetings.IsDevelopment ? message : ErrorMsg.DbError);
+}
+public class ValidatorException : Exception
+{
+    public ValidatorException(string message) : base(message) { }
+    public static ExceptionRecord Response(string message) => AppException.Response(message);
+}

@@ -12,7 +12,7 @@ using MizeBazi.Store.Data;
 namespace MizeBazi.Store.Data.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20251110170710_AddDB")]
+    [Migration("20251114123226_AddDB")]
     partial class AddDB
     {
         /// <inheritdoc />

@@ -1,4 +1,4 @@
 {
-  "WriteConnection": "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Store;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False",
-  "ReadConnection": "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Store;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False"
+  "WriteConnection": "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=MizeBaziStore;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False",
+  "ReadConnection": "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=MizeBaziStore;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False"
 }

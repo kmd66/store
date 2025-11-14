@@ -1,5 +1,6 @@
 ﻿using System.IO.Compression;
 using System.Reflection;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MizeBazi.Store.Common.Helper;
 public static class ExtentionHelper
@@ -26,6 +27,8 @@ public static class ExtentionHelper
     }
     public static string ToJson(this object obj)
         => System.Text.Json.JsonSerializer.Serialize(obj);
+    public static string AppJoin(this List<string> obj)
+        => string.Join(":,:", obj);
 
     public static T JsonToObject<T>(this string s)
         => System.Text.Json.JsonSerializer.Deserialize<T>(s);

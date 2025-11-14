@@ -64,4 +64,12 @@ public static class QueryExtention
     }
     public static string Query(this DateTime i)
         => $"'{i.ToString("yyyy-MM-dd HH:mm:ss")}'";
+
+    public static object ToDbValue(this int? value) => value.HasValue? value.Value : DBNull.Value;
+
+    public static object ToDbValue(this string value) => string.IsNullOrEmpty(value) ? DBNull.Value : value;
+
+    public static object ToDbValue(this bool? value) => value.HasValue ? value.Value : DBNull.Value;
+
+    public static object ToDbValue(this DateTime? value) => value.HasValue ? value.Value : DBNull.Value;
 }

@@ -50,6 +50,11 @@ public class ExceptionMiddleware(RequestDelegate next)
                 errorResponse = AppTimeoutException.Response(); 
                 break;
 
+            case DbException:
+            case ValidatorException:
+                errorResponse = DbException.Response(exception.Message);
+                break;
+
             default:
                 errorResponse = AppException.Response(exception.Message, code: 500);
                 break;
@@ -65,7 +70,11 @@ public class ExceptionMiddleware(RequestDelegate next)
         }
 
         response.StatusCode = StatusCodes.Status200OK;
-        if (errorResponse.code == 500 || errorResponse.code == 408)
+        if (
+                errorResponse.code == 500 ||
+                errorResponse.code == 408 ||
+                exception is DbException
+            )
             response.StatusCode = errorResponse.code;
 
         var jsonResponse = errorResponse.ToJson();
