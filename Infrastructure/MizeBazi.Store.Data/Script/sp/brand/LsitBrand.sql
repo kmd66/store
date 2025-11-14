@@ -19,7 +19,7 @@ BEGIN
 		COUNT(Id) OVER() AS TotalCount
 	FROM Brands
 	WHERE (@IsDeleted IS NULL OR IsDeleted = @IsDeleted)
-		AND (@Name IS NULL OR Name = @Name)
+		AND (@Name IS NULL OR [Name] Like '%'+ @Name +'%')
 	ORDER BY Id DESC
 	OFFSET ((@PageIndex - 1) * @PageSize) ROWS FETCH NEXT @PageSize ROWS ONLY
 	--OPTION(RECOMPILE);

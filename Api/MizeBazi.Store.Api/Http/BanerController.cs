@@ -17,7 +17,7 @@ public class BanerController(IAppMediator mediator) : _ControllerBase
         => mediator.Send(model);
 
     [HttpPost("get")]
-    public Task<Result<BaseBanerRecordModel>> Get([FromBody] GetBanerQuery model)
+    public Task<Result<GetBanerResult>> Get([FromBody] GetBanerQuery model)
         => mediator.Send(model);
 
     [HttpPost("list")]

@@ -17,8 +17,11 @@ public record AddBanerCommand : BaseBanerRecordModel, ICommand<Result>;
 public record EditeBanerCommand : BaseBanerRecordModel, ICommand<Result>;
 
 
-public record GetBanerQuery : DbGetRecord, IQuery<Result<BaseBanerRecordModel>>;
+public record GetBanerQuery : DbGetRecord, IQuery<Result<GetBanerResult>>;
 public record ListBanerQuery(string Name) : PaginationRecord, IQuery<Result<IEnumerable<ListBanerResult>>>;
 
 
-public record ListBanerResult(int TotalCount) : BaseBanerRecordModel;
+public record GetBanerResult : BaseBanerRecordModel;
+public record ListBanerResult(
+        long id, Guid unicId, DateTime date, bool isDeleted, DateTime? deletedDate,
+        string name, string description, string logoUrl, int totalCount);

@@ -8,10 +8,10 @@ namespace MizeBazi.Store.Application;
 public class GetBanerQueryHandler(
     IBrandRead dataSource,
     IAppLogger<GetBanerQueryHandler> logger
-    ) : IQueryHandler<GetBanerQuery, Result<BaseBanerRecordModel>>
+    ) : IQueryHandler<GetBanerQuery, Result<GetBanerResult>>
 {
 
-    public Task<Result<BaseBanerRecordModel>> Handle(GetBanerQuery query){
+    public Task<Result<GetBanerResult>> Handle(GetBanerQuery query){
 
         if (query.Id == null && query.UnicId == null)
         {
@@ -22,6 +22,6 @@ public class GetBanerQueryHandler(
         return dataSource.GetAsync(query);
     }
 
-    public Task<Result<BaseBanerRecordModel>> Handle(GetBanerQuery query, CancellationToken cancellationToken)
+    public Task<Result<GetBanerResult>> Handle(GetBanerQuery query, CancellationToken cancellationToken)
         => throw new NotImplementedException();
 }

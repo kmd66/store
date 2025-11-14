@@ -19,8 +19,6 @@ public static class QueryExtention
             return "NULL";
         return i.ToString();
     }
-    public static string Query(this int i)
-        => i.ToString();
 
     public static string Query(this bool? b)
     {
@@ -38,16 +36,12 @@ public static class QueryExtention
             return "NULL";
         return i.ToString();
     }
-    public static string Query(this long i)
-        => i.ToString();
     public static string Query(this byte? i)
     {
         if (i == null)
             return "NULL";
         return i.ToString();
     }
-    public static string Query(this byte i)
-        => i.ToString();
     public static string Query(this Guid? i)
     {
         if (i == null)
@@ -67,7 +61,7 @@ public static class QueryExtention
 
     public static object ToDbValue(this int? value) => value.HasValue? value.Value : DBNull.Value;
 
-    public static object ToDbValue(this string value) => string.IsNullOrEmpty(value) ? DBNull.Value : value;
+    public static object ToDbValue(this string value) => string.IsNullOrEmpty(value) ? null : value;
 
     public static object ToDbValue(this bool? value) => value.HasValue ? value.Value : DBNull.Value;
 

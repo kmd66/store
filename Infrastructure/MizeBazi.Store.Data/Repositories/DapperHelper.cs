@@ -41,5 +41,17 @@ public static class DapperCommandHelper
             cancellationToken: cancellationToken
         );
     }
+    public static CommandDefinition CreateQuery(
+        this string sql,
+        int? commandTimeout = 30,
+        CancellationToken cancellationToken = default)
+    {
+        return new CommandDefinition(
+            sql,
+            commandType: CommandType.StoredProcedure,
+            commandTimeout: commandTimeout,
+            cancellationToken: cancellationToken
+        );
+    }
 }
 

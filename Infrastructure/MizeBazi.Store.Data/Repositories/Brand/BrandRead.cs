@@ -9,7 +9,7 @@ namespace MizeBazi.Store.Data.Repositories;
 
 public class BrandRead : IBrandRead
 {
-    public async Task<Result<BaseBanerRecordModel>> GetAsync(GetBanerQuery model, CancellationToken cancellationToken = default)
+    public async Task<Result<GetBanerResult>> GetAsync(GetBanerQuery model, CancellationToken cancellationToken = default)
     {
         try
         {
@@ -24,14 +24,14 @@ public class BrandRead : IBrandRead
                     cancellationToken: cancellationToken
                 );
 
-                var result = await connection.QueryAsync<BaseBanerRecordModel>(query);
+                var result = await connection.QueryAsync<GetBanerResult>(query);
 
-                return Result<BaseBanerRecordModel>.Successful(data: result.FirstOrDefault());
+                return Result<GetBanerResult>.Successful(data: result.FirstOrDefault());
             }
         }
         catch (Exception ex)
         {
-            throw new DbException($"Brand Add Exception {ex.Message}");
+            throw new DbException($"Brand Get Exception {ex.Message}");
         }
     }
 
@@ -44,7 +44,7 @@ public class BrandRead : IBrandRead
             {
                 var p = new DynamicParameters();
                 p.Add("@Name", model.Name.ToDbValue());
-                p.Add("@IsDeleted", model.IsDeleted.ToDbValue());
+                p.Add("@IsDeleted", model.IsDeleted);
                 p.Add("@PageSize", model.PageSize);
                 p.Add("@PageIndex", model.PageIndex);
 
@@ -60,7 +60,7 @@ public class BrandRead : IBrandRead
         }
         catch (Exception ex)
         {
-            throw new DbException($"Brand Add Exception {ex.Message}");
+            throw new DbException($"Brand List Exception {ex.Message}");
         }
     }
 }
