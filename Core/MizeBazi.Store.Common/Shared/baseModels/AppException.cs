@@ -1,6 +1,6 @@
 ﻿namespace MizeBazi.Store.Common.Shared;
 
-public record ExceptionRecord(bool success, string message, int code,int totalCount);
+public record ExceptionRecord(bool success, string message, int code, int totalCount);
 
 public class AppException : Exception
 {
@@ -11,7 +11,7 @@ public class AppException : Exception
         result = Result.Failure(code: code, message: message);
     }
 
-    public static ExceptionRecord Response(string message, int code = -1) => new ExceptionRecord (false, message, code, 0);
+    public static ExceptionRecord Response(string message, int code = -1) => new(false, message, code, 0);
 }
 
 public class AppTokenException : Exception

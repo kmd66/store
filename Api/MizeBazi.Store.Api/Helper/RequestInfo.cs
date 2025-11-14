@@ -1,32 +1,15 @@
-﻿using MizeBazi.Store.Common.Abstractions;
-using MizeBazi.Store.Common.Helper;
-using MizeBazi.Store.Common.Shared;
+﻿//using Microsoft.AspNetCore.Http;
+//using MizeBazi.Store.Common.Abstractions;
 
-namespace MizeBazi.Store.Api.Helper;
+//namespace MizeBazi.Store.Api.Helper;
 
-public class RequestInfo : IRequestInfo
-{
+//public class RequestInfoApi : Common.Shared.RequestInfo
+//{
 
-    private readonly IHttpContextAccessor _httpContextAccessor;
+//    //private readonly IHttpContextAccessor _httpcontextaccessor;
 
-    public RequestInfo(IHttpContextAccessor httpContextAccessor)
-    {
-        _httpContextAccessor = httpContextAccessor;
-        if (_httpContextAccessor.HttpContext?.Request != null && _httpContextAccessor.HttpContext.Request.Headers.ContainsKey("Auth"))
-        {
-            var token = _httpContextAccessor.HttpContext.Request.Headers["Auth"];
-            var model = new JwtHelper().Decode(token);
-            UserId = model.UserId;
-            Role = model.Role;
-        }
-    }
+//    //public RequestInfoApi(IHttpContextAccessor httpcontextaccessor)
+//    //{
+//    //}
+//}
 
-    private RequestInfo()
-    {
-    }
-
-    public long UserId { get; set; }
-
-    public UserRoles Role { get; set; }
-
-}

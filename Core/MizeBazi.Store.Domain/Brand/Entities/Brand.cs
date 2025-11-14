@@ -17,10 +17,6 @@ public class Brand : DbBrand
 
     public override void Confirm(Common.Shared.EventType t)
     {
-        if (IsConfirmed) return;
-
-        var @event = new OrderConfirmedEvent(this.UnicId, t);
-        _listEvents.Add(@event);
         base.Confirm(t);
     }
 }
