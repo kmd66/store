@@ -1,4 +1,6 @@
 ﻿namespace MizeBazi.Store.Common.Shared;
+
+public record TokenRequest(string Token);
 public class Jwt
 {
     public Guid Id { get; set; }
