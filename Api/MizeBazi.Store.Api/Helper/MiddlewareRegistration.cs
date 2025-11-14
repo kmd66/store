@@ -6,6 +6,10 @@ public static class MiddlewareRegistration
 {
     public static IApplicationBuilder SetAppMiddlewares(this IApplicationBuilder builder)
     {
-        return builder.UseMiddleware<RequestInfoMiddleware>();
+        builder.UseMiddleware<ExceptionMiddleware>();
+
+        builder.UseMiddleware<RequestInfoMiddleware>();
+
+        return builder;
     }
 }
