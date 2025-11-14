@@ -1,5 +1,4 @@
 using MizeBazi.Store.Api.Helper;
-using MizeBazi.Store.Api.Middleware;
 using MizeBazi.Store.Common.Helper;
 
 var builder = WebApplication.CreateBuilder(args);

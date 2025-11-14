@@ -5,15 +5,11 @@ dotnet ef database update --context StoreContext
 
 -------------------------------------------------
 API/
-    ├── Logging/
+    ├──filemanager/
     └── Security/
-
+AspNetCoreRateLimit,
 -------------------------------------------------
 
-EntityFrameworkCore
-Scrutor
-Serilog
-AspNetCoreRateLimit, 
-MemoryCache
+ 
 
 

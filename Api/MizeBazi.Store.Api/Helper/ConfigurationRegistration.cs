@@ -9,9 +9,9 @@ public static class ConfigurationRegistration
         AppSetings.SetConnection();
 
         AppSetings.CreateRoomKey = config.GetSection("Jwt:createRoomKey").Value;
-        AppSetings.JwtKey = config.GetSection("Jwt:Key").Value;
-        AppSetings.JwtIv = config.GetSection("Jwt:Iv").Value;
-        AppSetings.AccessTokenTime = int.Parse(config.GetSection("Jwt:AccessTokenTime").Value);
+        //AppSetings.JwtKey = config.GetSection("Jwt:Key").Value;
+        //AppSetings.JwtIv = config.GetSection("Jwt:Iv").Value;
+        //AppSetings.AccessTokenTime = int.Parse(config.GetSection("Jwt:AccessTokenTime").Value);
 
         AppSetings.ApiPort = int.Parse(config.GetSection("Urls:apiPort").Value);
         AppSetings.GrpcPort = int.Parse(config.GetSection("Urls:grpcPort").Value);

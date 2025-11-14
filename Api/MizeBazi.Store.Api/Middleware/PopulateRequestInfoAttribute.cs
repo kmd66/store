@@ -38,7 +38,6 @@ public class PopulateRequestInfoAttribute : Attribute, IActionFilter
     }
 }
 
-// Middleware
 public class RequestInfoMiddleware
 {
     private readonly RequestDelegate _next;
@@ -63,7 +62,7 @@ public class RequestInfoMiddleware
             if (!userId.IsNullOrEmpty() && !tokenId.IsNullOrEmpty())
             {
                 cacheService.TryGetValue<CacheInMemoryRecord>("token", userId, out var lastCallTime);
-                if (lastCallTime != null)
+                if (lastCallTime != null && tokenId == lastCallTime.Id.ToString())
                 {
                     requestInfo.UserId = lastCallTime.UserId;
                     requestInfo.Role = lastCallTime.Role;
