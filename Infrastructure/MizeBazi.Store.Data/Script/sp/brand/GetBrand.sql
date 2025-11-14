@@ -1,0 +1,18 @@
+USE [MizeBaziStore]
+GO
+
+IF EXISTS(SELECT 1 FROM sys.procedures WHERE [object_id] = OBJECT_ID('sp.GetBrand'))
+	DROP PROCEDURE sp.GetBrand
+GO
+
+CREATE PROCEDURE sp.GetBrand
+	@Id BIGINT,
+	@UnicId UNIQUEIDENTIFIER
+WITH ENCRYPTION
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	SELECT TOP 1 * FROM Brands
+	WHERE Id = @Id OR UnicId = @UnicId
+END

@@ -7,11 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Brand\Handlers\" />
-    <Folder Include="DTOs\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\MizeBazi.Store.Common\MizeBazi.Store.Common.csproj" />
     <ProjectReference Include="..\MizeBazi.Store.Domain\MizeBazi.Store.Domain.csproj" />
   </ItemGroup>

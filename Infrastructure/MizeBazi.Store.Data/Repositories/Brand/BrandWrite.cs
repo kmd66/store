@@ -1,14 +1,59 @@
-﻿using MizeBazi.Store.Application.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using MizeBazi.Store.Application;
+using MizeBazi.Store.Application.Interfaces;
+using MizeBazi.Store.Common.Helper;
 using MizeBazi.Store.Common.Shared;
-using MizeBazi.Store.Domain;
 
 namespace MizeBazi.Store.Data.Repositories;
 
-public class BrandWrite : IBrandWrite
+public class BrandWrite(StoreContext context) : IBrandWrite
 {
-    public Task<Result> AddAsync(DbBrand brand)
+    readonly StoreContext _context = context;
+
+    public async Task<Result> AddAsync(AddBanerCommand model, CancellationToken cancellationToken = default)
     {
-        return Result.SuccessfulAsync();
+        try
+        {
+            var brand = model.JsonMapObject<Entities.Brand>();
+            brand.UnicId = Guid.NewGuid();
+            brand.Date = DateTime.UtcNow;
+            brand.IsDeleted = false;
+            brand.DeletedDate = null;
+            
+            _context.Brands.Add(brand);
+            await _context.SaveChangesAsync(cancellationToken);
+
+            return Result.Successful();
+        }
+        catch (Exception ex)
+        {
+            throw new DbException($"Brand Add Exception {ex.Message}");
+        }
+    }
+
+    public async Task<Result> EditeAsync(EditeBanerCommand model, CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            var ett = await _context.Brands.FirstOrDefaultAsync(x =>
+                x.Id == model.Id, 
+                cancellationToken
+            );
+
+            if (ett == null)
+                return Result.Successful();
+
+            ett.Name = model.Name;
+            ett.Description = model.Description;
+            _context.Update(ett);
+            await _context.SaveChangesAsync();
+            return Result.Successful();
+
+        }
+        catch (Exception ex)
+        {
+            throw new DbException($"Brand Edite Exception {ex.Message}");
+        }
     }
 }
 

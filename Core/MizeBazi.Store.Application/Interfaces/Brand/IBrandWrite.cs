@@ -1,9 +1,10 @@
 ﻿using MizeBazi.Store.Common.Shared;
-using MizeBazi.Store.Domain;
 
 namespace MizeBazi.Store.Application.Interfaces;
 
 public interface IBrandWrite
 {
-    Task<Result> AddAsync(DbBrand brand);
+    Task<Result> AddAsync(AddBanerCommand brand, CancellationToken cancellationToken = default);
+
+    Task<Result> EditeAsync(EditeBanerCommand brand, CancellationToken cancellationToken = default);
 }
