@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using MizeBazi.Store.Common.Shared;
+using System.Reflection;
 
 namespace MizeBazi.Store.Common.Abstractions;
 
@@ -17,12 +18,19 @@ public class MediatorAdapter : IAppMediator
         CancellationToken cancellationToken = default
     )
     {
-        var handlerInfo = GetHandler<ICommand<TResponse>, TResponse>(command);
-        var modelType = handlerInfo.ModelType;
-        var handler = handlerInfo.Handler;
+        try
+        {
+            var handlerInfo = GetHandler<ICommand<TResponse>, TResponse>(command);
+            var modelType = handlerInfo.ModelType;
+            var handler = handlerInfo.Handler;
 
-        await CallBehavior(modelType, command, cancellationToken);
-        return await CallHandle<TResponse>(command, handler, cancellationToken);
+            await CallBehavior(modelType, command, cancellationToken);
+            return await CallHandle<TResponse>(command, handler, cancellationToken);
+        }
+        catch (Exception e)
+        {
+            throw new Exception();
+        }
     }
 
     public async Task<TResponse> Send<TResponse>(
@@ -30,13 +38,19 @@ public class MediatorAdapter : IAppMediator
         CancellationToken cancellationToken = default
     )
     {
-        var handlerInfo = GetHandler<IQuery<TResponse>, TResponse>(query);
-        var modelType = handlerInfo.ModelType;
-        var handler = handlerInfo.Handler;
+        try
+        {
+            var handlerInfo = GetHandler<IQuery<TResponse>, TResponse>(query);
+            var modelType = handlerInfo.ModelType;
+            var handler = handlerInfo.Handler;
 
-        await CallBehavior(modelType, query, cancellationToken);
-        return await CallHandle<TResponse>(query, handler, cancellationToken);
-
+            await CallBehavior(modelType, query, cancellationToken);
+            return await CallHandle<TResponse>(query, handler, cancellationToken);
+        }
+        catch (Exception e)
+        {
+            throw new Exception();
+        }
     }
 
 
@@ -76,59 +90,56 @@ public class MediatorAdapter : IAppMediator
     }
     public async Task<TAfterBehavior> Pipeline<TAfterBehavior>(IRequest request, CancellationToken cancellationToken = default)
     {
-        var reqInterface = request.GetType().GetInterfaces().First(i =>
-        i.IsGenericType &&i.GetGenericTypeDefinition().Name == "IRequest`1");
-
-        var requestInterface = request.GetType().GetInterfaces()
-        .First(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IRequest<>))
-        .GetGenericArguments()[0];
-
-        var responseType1 = requestInterface.GetGenericArguments()[0];
-        var responseType = reqInterface.GetGenericArguments()[0];
-
-        var t = typeof(TAfterBehavior);
-        var afterHandlerType = typeof(IPipelineBehavior<,>).MakeGenericType(requestInterface, typeof(TAfterBehavior));
-        var afterHandler = _provider.GetService(afterHandlerType);
-
-        if (afterHandler == null)
-        {
-            throw new InvalidOperationException($"No handler registered2 for {afterHandlerType.FullName}");
-        }
-        
-        var handlerType = typeof(IRequestHandler<,>).MakeGenericType(request.GetType(), requestInterface);
-        var handler = _provider.GetService(handlerType);
-        if (handler == null)
-        {
-            throw new InvalidOperationException($"No handler registered for {handlerType.FullName}");
-        }
-
-        await CallBehavior(responseType, request, cancellationToken);
-
-        var response = await CallHandleDynamic(
-            responseType,
-            request,
-            handler,
-            cancellationToken
-        );
-
-        dynamic dynHandler = afterHandler;
         try
         {
-            if (cancellationToken == CancellationToken.None)
+            var reqInterface = request.GetType().GetInterfaces().First(i =>i.IsGenericType && i.GetGenericTypeDefinition().Name == "IRequest`1");
+
+            var requestInterface = request.GetType().GetInterfaces()
+            .First(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IRequest<>))
+            .GetGenericArguments()[0];
+
+            var responseType1 = requestInterface.GetGenericArguments()[0];
+            var responseType = reqInterface.GetGenericArguments()[0];
+
+            var t = typeof(TAfterBehavior);
+            var afterHandlerType = typeof(IPipelineBehavior<,>).MakeGenericType(requestInterface, typeof(TAfterBehavior));
+            var afterHandler = _provider.GetService(afterHandlerType);
+
+            if (afterHandler == null)
             {
-                var resultTask1 = (Task<TAfterBehavior>)dynHandler.Handle(response);
-                return await resultTask1.ConfigureAwait(false);
+                throw new InvalidOperationException($"No handler registered2 for {afterHandlerType.FullName}");
             }
 
-            var resultTask = (Task<TAfterBehavior>)dynHandler.Handle(response, cancellationToken);
-            return await resultTask.ConfigureAwait(false);
+            var handlerType = typeof(IRequestHandler<,>).MakeGenericType(request.GetType(), requestInterface);
+            var handler = _provider.GetService(handlerType);
+            if (handler == null)
+            {
+                throw new InvalidOperationException($"No handler registered for {handlerType.FullName}");
+            }
+
+            await CallBehavior(responseType, request, cancellationToken);
+
+            var response = await CallHandleDynamic(
+                responseType,
+                request,
+                handler,
+                cancellationToken
+            );
+
+            dynamic dynHandler = afterHandler;
+            var handleMethod = dynHandler.GetType().GetMethod("Handle", new[] { response.GetType() });
+
+            var task = (Task)handleMethod.Invoke(dynHandler, new object[] { response });
+            await task.ConfigureAwait(false);
+
+            var result = task.GetType().GetProperty("Result").GetValue(task);
+            return (TAfterBehavior)result;
         }
         catch (Exception e)
         {
-            var st = e.Message;
+            throw new Exception();
         }
 
-        throw new NotImplementedException();
     }
 
     private (Type ModelType, object Handler) GetHandler<TRequest, TResponse>(TRequest request)

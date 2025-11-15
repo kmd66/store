@@ -11,8 +11,7 @@ public class BanerController(IAppMediator mediator) : _ControllerBase
 {
 
     /// <summary>
-    /// Admin
-    ///  اکشن های مدیریت
+    /// Admin  اکشن های مدیریت
     /// </summary>
     [HttpPost("add")]
     public Task<Result> Add([FromBody] AddBanerCommand model)
@@ -31,15 +30,13 @@ public class BanerController(IAppMediator mediator) : _ControllerBase
         => mediator.Send(model);
 
     /// <summary>
-    /// Guest
-    ///  اکشن های کاربر
+    /// Guest  اکشن های کاربر
     /// </summary>
-    /// 
     [AllowAnonymous, HttpPost("getForUser")]
     public Task<Result<GetBanerForUserResult>> GetForUser([FromBody] GetBanerQuery model)
-        => mediator.Pipline(model, new GetBanerForUserResult()); //mediator.Pipeline<Result<IEnumerable<ListBanerForUserResult>>>(model);
+        => mediator.Pipeline<Result<GetBanerForUserResult>>(model);
 
     [Auth(UserRoles.Guest), HttpPost("listForUser")]
     public Task<Result<IEnumerable<ListBanerForUserResult>>> ListForUser([FromBody] ListBanerQuery model)
-        => mediator.Pipline(model, new ListBanerForUserResult());
+        => mediator.Pipeline<Result<IEnumerable<ListBanerForUserResult>>>(model);
 }
