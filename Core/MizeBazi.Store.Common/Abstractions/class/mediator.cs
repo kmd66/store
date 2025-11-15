@@ -1,32 +1,4 @@
 ﻿namespace MizeBazi.Store.Common.Abstractions;
-public interface ICommand<TResponse> { }
-
-public interface IQuery<TResponse> { }
-public interface IBehaviorHandler<T>
-{
-    Task Handle(T command, CancellationToken cancellationToken);
-    Task Handle(T command);
-}
-
-public interface ICommandHandler<TCommand, TResponse>
-    where TCommand : ICommand<TResponse>
-{
-    Task<TResponse> Handle(TCommand command, CancellationToken cancellationToken);
-    Task<TResponse> Handle(TCommand command);
-}
-
-public interface IQueryHandler<TQuery, TResponse>
-    where TQuery : IQuery<TResponse>
-{
-    Task<TResponse> Handle(TQuery query, CancellationToken cancellationToken);
-    Task<TResponse> Handle(TQuery query);
-}
-
-public interface IAppMediator
-{
-    Task<TResponse> Send<TResponse>(ICommand<TResponse> command, CancellationToken cancellationToken = default);
-    Task<TResponse> Send<TResponse>(IQuery<TResponse> query, CancellationToken cancellationToken = default);
-}
 
 public class MediatorAdapter : IAppMediator
 {
@@ -38,49 +10,101 @@ public class MediatorAdapter : IAppMediator
     }
 
 
-    public async Task<TResponse> Send<TResponse>(ICommand<TResponse> command, CancellationToken cancellationToken = default)
+    public async Task<TResponse> Send<TResponse>(
+        ICommand<TResponse> command,
+        CancellationToken cancellationToken = default
+    )
     {
-        if (command == null) throw new ArgumentNullException(nameof(command));
+        var handlerInfo = GetHandler<ICommand<TResponse>, TResponse>(command);
+        var modelType = handlerInfo.ModelType;
+        var handler = handlerInfo.Handler;
 
-        var commandType = command.GetType();
-        var handlerType = typeof(ICommandHandler<,>).MakeGenericType(commandType, typeof(TResponse));
+        await CallBehavior(modelType, command, cancellationToken);
+        return await CallHandle<TResponse>(command, handler, cancellationToken);
+    }
+
+    public async Task<TResponse> Send<TResponse>(
+        IQuery<TResponse> query,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var handlerInfo = GetHandler<IQuery<TResponse>, TResponse>(query);
+        var modelType = handlerInfo.ModelType;
+        var handler = handlerInfo.Handler;
+
+        await CallBehavior(modelType, query, cancellationToken);
+        return await CallHandle<TResponse>(query, handler, cancellationToken);
+
+    }
+
+
+    public async Task<TAfterBehavior> Pipline<TResponse, TAfterBehavior>(
+        IRequest<TResponse> request,
+        IRequest<TAfterBehavior> afterBehavior = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+
+        
+        var afterType = afterBehavior.GetType();
+        var afterHandlerType = typeof(IPipelineBehavior<,>).MakeGenericType(typeof(TResponse), typeof(TAfterBehavior));
+
+
+        var afterHandler = _provider.GetService(afterHandlerType);
+        if (afterHandler == null)
+        {
+            throw new InvalidOperationException($"No handler registered for {afterHandlerType.FullName}");
+        }
+
+        var handlerInfo = GetHandler<IRequest<TResponse>, TResponse>(request);
+        var modelType = handlerInfo.ModelType;
+        var handler = handlerInfo.Handler;
+
+        await CallBehavior(modelType, request, cancellationToken);
+
+        var response = await CallHandle<TResponse>(request, handler, cancellationToken);
+
+
+        dynamic dynHandler = afterHandler;
+        if (cancellationToken == CancellationToken.None)
+        {
+            var resultTask1 = (Task<TAfterBehavior>)dynHandler.Handle(response);
+            return await resultTask1.ConfigureAwait(false);
+        }
+
+        var resultTask = (Task<TAfterBehavior>)dynHandler.Handle(response, cancellationToken);
+        return await resultTask.ConfigureAwait(false);
+
+    }
+
+    private (Type ModelType, object Handler) GetHandler<TRequest, TResponse>(TRequest request)
+        where TRequest : IRequest<TResponse>
+    {
+        if (request == null)
+            throw new ArgumentNullException(nameof(request));
+
+        var modelType = request.GetType();
+        var handlerType = typeof(IRequestHandler<,>).MakeGenericType(modelType, typeof(TResponse));
 
         var handler = _provider.GetService(handlerType);
         if (handler == null)
         {
             throw new InvalidOperationException($"No handler registered for {handlerType.FullName}");
         }
-        var dynamicModel = (dynamic)command;
-        await behavior(commandType, dynamicModel, cancellationToken);
-        dynamic dynHandler = handler;
-        return await callHandle<TResponse>(dynamicModel, handler, cancellationToken);
+
+        return (modelType, handler);
     }
 
-    public async Task<TResponse> Send<TResponse>(IQuery<TResponse> query, CancellationToken cancellationToken = default)
+    private async Task CallBehavior(Type t, dynamic obj, CancellationToken cancellationToken = default)
     {
-        if (query == null) throw new ArgumentNullException(nameof(query));
+        if (t == null) return;
 
-        var queryType = query.GetType();
-        var handlerType = typeof(IQueryHandler<,>).MakeGenericType(queryType, typeof(TResponse));
-
-        var handler = _provider.GetService(handlerType);
-        if (handler == null)
-        {
-            throw new InvalidOperationException($"No handler registered for {handlerType.FullName}");
-        }
-
-        var dynamicModel = (dynamic)query;
-        await behavior(queryType, dynamicModel, cancellationToken);
-        return await callHandle<TResponse>(dynamicModel, handler, cancellationToken);
-    }
-    private async Task behavior(Type t, dynamic obj, CancellationToken cancellationToken = default)
-    {
         var type = typeof(IBehaviorHandler<>).MakeGenericType(t);
         var handler = _provider.GetService(type);
         if (handler != null)
         {
             dynamic dynHandler = handler;
-            if(cancellationToken == CancellationToken.None)
+            if (cancellationToken == CancellationToken.None)
             {
                 var resultTask = dynHandler.Handle(obj);
                 await resultTask.ConfigureAwait(false);
@@ -93,7 +117,7 @@ public class MediatorAdapter : IAppMediator
         }
     }
 
-    private async Task<TResponse> callHandle<TResponse>(dynamic obj, dynamic dynHandler, CancellationToken cancellationToken = default)
+    private async Task<TResponse> CallHandle<TResponse>(dynamic obj, dynamic dynHandler, CancellationToken cancellationToken = default)
     {
 
         if (cancellationToken == CancellationToken.None)
@@ -105,5 +129,27 @@ public class MediatorAdapter : IAppMediator
         var resultTask = (Task<TResponse>)dynHandler.Handle(obj, cancellationToken);
         return await resultTask.ConfigureAwait(false);
 
+    }
+    private async Task<TAfterBehavior> CallPipeline<TAfterBehavior>(IRequest<TAfterBehavior> t, dynamic obj, CancellationToken cancellationToken = default)
+    {
+        var modelType = t.GetType();
+        var type = typeof(IPipelineBehavior<,>).MakeGenericType(modelType, typeof(TAfterBehavior));
+        var handler = _provider.GetService(type);
+        if (handler != null)
+        {
+            dynamic dynHandler = handler;
+            if (cancellationToken == CancellationToken.None)
+            {
+                var resultTask = dynHandler.Handle(obj);
+                await resultTask.ConfigureAwait(false);
+            }
+            else
+            {
+                var resultTask = dynHandler.Handle(obj, cancellationToken);
+                await resultTask.ConfigureAwait(false);
+            }
+        }
+
+        return obj;
     }
 }

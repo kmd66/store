@@ -23,17 +23,15 @@ public static class DependencyInjection
         services.Scan(scan => scan
             .FromAssemblies(assemblyApplication)
             .AddClasses(classes => classes.AssignableTo(typeof(ICommandHandler<,>)))
-                .AsImplementedInterfaces()
-                .WithScopedLifetime()
+                .AsImplementedInterfaces().WithScopedLifetime()
             .AddClasses(classes => classes.AssignableTo(typeof(IQueryHandler<,>)))
-                .AsImplementedInterfaces()
-                .WithScopedLifetime()
+                .AsImplementedInterfaces().WithScopedLifetime()
             .AddClasses(classes => classes.AssignableTo(typeof(IBehaviorHandler<>)))
-                .AsImplementedInterfaces()
-                .WithScopedLifetime()
+                .AsImplementedInterfaces().WithScopedLifetime()
+            .AddClasses(classes => classes.AssignableTo(typeof(IPipelineBehavior<,>)))
+                .AsImplementedInterfaces().WithScopedLifetime()
             .AddClasses(classes => classes.AssignableTo(typeof(IDomainEventHandler<>)))
-                .AsImplementedInterfaces()
-                .WithScopedLifetime()
+                .AsImplementedInterfaces().WithScopedLifetime()
         );
         servicesScanWithName(services, assemblyApplication);
         servicesScanWithName(services, Assembly.Load("MizeBazi.Store.Common"));
