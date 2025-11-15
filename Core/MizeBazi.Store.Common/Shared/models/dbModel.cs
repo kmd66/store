@@ -1,4 +1,6 @@
-﻿namespace MizeBazi.Store.Common.Shared;
+﻿using System.ComponentModel;
+
+namespace MizeBazi.Store.Common.Shared;
 public abstract record DbGetRecord
 {
     public long? Id { get; set; }
@@ -17,7 +19,9 @@ public abstract record PaginationRecord
 {
     private int _pageIndex = 1;
     private int _pageSize = 10;
-    public bool? IsDeleted { get; init; }
+
+    [DefaultValue(false)]
+    public bool? IsDeleted { get; init; } = false;
 
     public int PageIndex {
         get => _pageIndex;

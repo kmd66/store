@@ -18,10 +18,15 @@ public record EditeBanerCommand : BaseBanerRecordModel, ICommand<Result>;
 
 
 public record GetBanerQuery : DbGetRecord, IQuery<Result<GetBanerResult>>;
-public record ListBanerQuery(string Name) : PaginationRecord, IQuery<Result<IEnumerable<ListBanerResult>>>;
+public record ListBanerQuery : PaginationRecord, IQuery<Result<IEnumerable<ListBanerResult>>>
+{
+    public string Name { get; init; }
+}
+
 
 
 public record GetBanerResult : BaseBanerRecordModel;
-public record ListBanerResult(
-        long id, Guid unicId, DateTime date, bool isDeleted, DateTime? deletedDate,
-        string name, string description, string logoUrl, int totalCount);
+public record ListBanerResult : BaseBanerRecordModel
+{
+    public int TotalCount { get; init; }
+}
