@@ -37,7 +37,7 @@ public class BanerController(IAppMediator mediator) : _ControllerBase
     /// 
     [AllowAnonymous, HttpPost("getForUser")]
     public Task<Result<GetBanerForUserResult>> GetForUser([FromBody] GetBanerQuery model)
-        => mediator.Pipline(model, new GetBanerForUserResult());
+        => mediator.Pipline(model, new GetBanerForUserResult()); //mediator.Pipeline<Result<IEnumerable<ListBanerForUserResult>>>(model);
 
     [Auth(UserRoles.Guest), HttpPost("listForUser")]
     public Task<Result<IEnumerable<ListBanerForUserResult>>> ListForUser([FromBody] ListBanerQuery model)

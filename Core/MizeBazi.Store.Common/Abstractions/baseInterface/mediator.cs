@@ -1,5 +1,6 @@
 ﻿namespace MizeBazi.Store.Common.Abstractions; 
-public interface IRequest<TResponse> { }
+public interface IRequest{ }
+public interface IRequest<TResponse>: IRequest { }
 
 public interface IRequestHandler<TRequest, TResponse>
     where TRequest : IRequest<TResponse>
@@ -96,6 +97,10 @@ public interface IAppMediator
     Task<TAfterBehavior> Pipline<TResponse, TAfterBehavior>(
         IRequest<TResponse> request,
         IRequest<TAfterBehavior> afterBehavior = null,
+        CancellationToken cancellationToken = default
+    );
+    Task<TAfterBehavior> Pipeline<TAfterBehavior>(
+        IRequest request,
         CancellationToken cancellationToken = default
     );
 }

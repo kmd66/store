@@ -1,4 +1,6 @@
-﻿namespace MizeBazi.Store.Common.Abstractions;
+﻿using System.Reflection;
+
+namespace MizeBazi.Store.Common.Abstractions;
 
 public class MediatorAdapter : IAppMediator
 {
@@ -44,11 +46,8 @@ public class MediatorAdapter : IAppMediator
         CancellationToken cancellationToken = default
     )
     {
-
-        
         var afterType = afterBehavior.GetType();
         var afterHandlerType = typeof(IPipelineBehavior<,>).MakeGenericType(typeof(TResponse), typeof(TAfterBehavior));
-
 
         var afterHandler = _provider.GetService(afterHandlerType);
         if (afterHandler == null)
@@ -64,7 +63,6 @@ public class MediatorAdapter : IAppMediator
 
         var response = await CallHandle<TResponse>(request, handler, cancellationToken);
 
-
         dynamic dynHandler = afterHandler;
         if (cancellationToken == CancellationToken.None)
         {
@@ -75,6 +73,62 @@ public class MediatorAdapter : IAppMediator
         var resultTask = (Task<TAfterBehavior>)dynHandler.Handle(response, cancellationToken);
         return await resultTask.ConfigureAwait(false);
 
+    }
+    public async Task<TAfterBehavior> Pipeline<TAfterBehavior>(IRequest request, CancellationToken cancellationToken = default)
+    {
+        var reqInterface = request.GetType().GetInterfaces().First(i =>
+        i.IsGenericType &&i.GetGenericTypeDefinition().Name == "IRequest`1");
+
+        var requestInterface = request.GetType().GetInterfaces()
+        .First(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IRequest<>))
+        .GetGenericArguments()[0];
+
+        var responseType1 = requestInterface.GetGenericArguments()[0];
+        var responseType = reqInterface.GetGenericArguments()[0];
+
+        var t = typeof(TAfterBehavior);
+        var afterHandlerType = typeof(IPipelineBehavior<,>).MakeGenericType(requestInterface, typeof(TAfterBehavior));
+        var afterHandler = _provider.GetService(afterHandlerType);
+
+        if (afterHandler == null)
+        {
+            throw new InvalidOperationException($"No handler registered2 for {afterHandlerType.FullName}");
+        }
+        
+        var handlerType = typeof(IRequestHandler<,>).MakeGenericType(request.GetType(), requestInterface);
+        var handler = _provider.GetService(handlerType);
+        if (handler == null)
+        {
+            throw new InvalidOperationException($"No handler registered for {handlerType.FullName}");
+        }
+
+        await CallBehavior(responseType, request, cancellationToken);
+
+        var response = await CallHandleDynamic(
+            responseType,
+            request,
+            handler,
+            cancellationToken
+        );
+
+        dynamic dynHandler = afterHandler;
+        try
+        {
+            if (cancellationToken == CancellationToken.None)
+            {
+                var resultTask1 = (Task<TAfterBehavior>)dynHandler.Handle(response);
+                return await resultTask1.ConfigureAwait(false);
+            }
+
+            var resultTask = (Task<TAfterBehavior>)dynHandler.Handle(response, cancellationToken);
+            return await resultTask.ConfigureAwait(false);
+        }
+        catch (Exception e)
+        {
+            var st = e.Message;
+        }
+
+        throw new NotImplementedException();
     }
 
     private (Type ModelType, object Handler) GetHandler<TRequest, TResponse>(TRequest request)
@@ -130,6 +184,22 @@ public class MediatorAdapter : IAppMediator
         return await resultTask.ConfigureAwait(false);
 
     }
+    private async Task<object> CallHandleDynamic(
+        Type responseType,
+        object request,
+        object handler,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var method = typeof(MediatorAdapter)
+            .GetMethod("CallHandle", BindingFlags.NonPublic | BindingFlags.Instance);
+
+        var generic = method.MakeGenericMethod(responseType);
+        var task = (Task)generic.Invoke(this, new object[] { request, handler, cancellationToken });
+        await task.ConfigureAwait(false);
+        return task.GetType().GetProperty("Result").GetValue(task);
+    }
+
     private async Task<TAfterBehavior> CallPipeline<TAfterBehavior>(IRequest<TAfterBehavior> t, dynamic obj, CancellationToken cancellationToken = default)
     {
         var modelType = t.GetType();

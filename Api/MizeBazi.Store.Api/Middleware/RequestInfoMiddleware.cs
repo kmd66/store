@@ -18,7 +18,7 @@ public class RequestInfoMiddleware
     public async Task InvokeAsync(HttpContext context, ICacheService cacheService, IRequestInfo requestInfo)
     {
         if (AppSetings.IsDevelopment)
-            SetRequestInfo(requestInfo, 20, UserRoles.Customer);
+            SetRequestInfo(requestInfo, 20, UserRoles.Admin);
 
 
         string tokenId = context.Request.Headers["tokenId"];
