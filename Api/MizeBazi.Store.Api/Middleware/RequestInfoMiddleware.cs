@@ -18,7 +18,7 @@ public class RequestInfoMiddleware
     public async Task InvokeAsync(HttpContext context, ICacheService cacheService, IRequestInfo requestInfo)
     {
         if (AppSetings.IsDevelopment)
-            requestInfo = RequestInfo.GetInstance(20, UserRoles.Admin);
+            SetRequestInfo(requestInfo, 20, UserRoles.Customer);
 
 
         string tokenId = context.Request.Headers["tokenId"];
@@ -28,41 +28,51 @@ public class RequestInfoMiddleware
         {
             cacheService.TryGetValue<CacheInMemoryRecord>("token", userId, out var lastCallTime);
             if (lastCallTime != null && tokenId == lastCallTime.TokenId.ToString())
-                requestInfo = RequestInfo.GetInstance(lastCallTime.UserId, lastCallTime.Role);
+                SetRequestInfo(requestInfo, lastCallTime.UserId, lastCallTime.Role);
             else
-                requestInfo = RequestInfo.GetInstance(0, UserRoles.Guest);
+                SetRequestInfo(requestInfo, 0, UserRoles.Guest);
         }
 
         await _next(context);
+
     }
+    private void SetRequestInfo(
+        IRequestInfo requestInfo,
+        long userId,
+        UserRoles role
+        )
+    {
+        requestInfo.UserId = userId;
+        requestInfo.Role = role;
+    } 
 }
 
-[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-public class PopulateRequestInfoAttribute : Attribute, IActionFilter
-{
+//[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+//public class PopulateRequestInfoAttribute : Attribute, IActionFilter
+//{
 
-    public void OnActionExecuting(ActionExecutingContext context)
-    {
-        var requestInfo = context.HttpContext.RequestServices.GetRequiredService<IRequestInfo>();
-        if (AppSetings.IsDevelopment)
-            requestInfo = RequestInfo.GetInstance(20, UserRoles.Admin);
+//    public void OnActionExecuting(ActionExecutingContext context)
+//    {
+//        var requestInfo = context.HttpContext.RequestServices.GetRequiredService<IRequestInfo>();
+//        if (AppSetings.IsDevelopment)
+//            requestInfo = RequestInfo.GetInstance(20, UserRoles.Admin);
 
-        string tokenId = context.HttpContext.Request.Headers["tokenId"];
-        string userId = context.HttpContext.Request.Headers["userId"];
-        if (!userId.IsNullOrEmpty() && !tokenId.IsNullOrEmpty())
-        {
-            var cacheService = context.HttpContext.RequestServices.GetRequiredService<ICacheService>();
-            cacheService.TryGetValue<CacheInMemoryRecord>("token", userId, out var lastCallTime);
-            if (lastCallTime != null)
-                requestInfo = RequestInfo.GetInstance(lastCallTime.UserId, lastCallTime.Role);
-            else
-                requestInfo = RequestInfo.GetInstance(0, UserRoles.Guest);
-        }
-    }
+//        string tokenId = context.HttpContext.Request.Headers["tokenId"];
+//        string userId = context.HttpContext.Request.Headers["userId"];
+//        if (!userId.IsNullOrEmpty() && !tokenId.IsNullOrEmpty())
+//        {
+//            var cacheService = context.HttpContext.RequestServices.GetRequiredService<ICacheService>();
+//            cacheService.TryGetValue<CacheInMemoryRecord>("token", userId, out var lastCallTime);
+//            if (lastCallTime != null)
+//                requestInfo = RequestInfo.GetInstance(lastCallTime.UserId, lastCallTime.Role);
+//            else
+//                requestInfo = RequestInfo.GetInstance(0, UserRoles.Guest);
+//        }
+//    }
 
-    public void OnActionExecuted(ActionExecutedContext context)
-    {
-    }
-}
+//    public void OnActionExecuted(ActionExecutedContext context)
+//    {
+//    }
+//}
 
 

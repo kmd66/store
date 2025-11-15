@@ -4,7 +4,7 @@ using MizeBazi.Store.Api.Middleware;
 namespace MizeBazi.Store.Api.Http;
 
 [ApiController]
-//[PopulateRequestInfo]
+[AuthForControllerBase]
 [Route("api/v1/[controller]")]
 public class _ControllerBase : ControllerBase
 {

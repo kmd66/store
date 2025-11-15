@@ -45,7 +45,7 @@ public static class DependencyInjection
 
         services.AddScoped<IAppMediator, MediatorAdapter>();
         services.AddScoped<AutoEventDispatcher>();
-        services.AddScoped<AuthFilter>();
+        //services.AddScoped<AuthFilter>();
 
         services.AddSingleton<IMessageBus, RabbitMQMessageBus>();
         return services;

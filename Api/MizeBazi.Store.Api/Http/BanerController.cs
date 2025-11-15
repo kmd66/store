@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MizeBazi.Store.Api.Middleware;
 using MizeBazi.Store.Application;
 using MizeBazi.Store.Common.Abstractions;
@@ -6,7 +7,6 @@ using MizeBazi.Store.Common.Helper;
 using MizeBazi.Store.Common.Shared;
 
 namespace MizeBazi.Store.Api.Http;
-
 public class BanerController(IAppMediator mediator) : _ControllerBase
 {
 
@@ -14,19 +14,19 @@ public class BanerController(IAppMediator mediator) : _ControllerBase
     /// Admin
     ///  اکشن های مدیریت
     /// </summary>
-    [Auth(UserRoles.Admin), HttpPost("add")]
+    [HttpPost("add")]
     public Task<Result> Add([FromBody] AddBanerCommand model)
         => mediator.Send(model);
 
-    [Auth(UserRoles.Admin), HttpPost("edite")]
+    [HttpPost("edite")]
     public Task<Result> Edite([FromBody] EditeBanerCommand model)
         => mediator.Send(model);
 
-    [Auth(UserRoles.Admin), HttpPost("get")]
+    [HttpPost("get")]
     public Task<Result<GetBanerResult>> Get([FromBody] GetBanerQuery model)
         => mediator.Send(model);
 
-    [Auth(UserRoles.Admin), HttpPost("list")]
+    [HttpPost("list")]
     public Task<Result<IEnumerable<ListBanerResult>>> List([FromBody] ListBanerQuery model)
         => mediator.Send(model);
 
@@ -35,7 +35,7 @@ public class BanerController(IAppMediator mediator) : _ControllerBase
     ///  اکشن های کاربر
     /// </summary>
     /// 
-    [Auth(UserRoles.Guest), HttpPost("getForUser")]
+    [AllowAnonymous, HttpPost("getForUser")]
     public Task<Result<GetBanerForUserResult>> GetForUser([FromBody] GetBanerQuery model)
         => mediator.Pipline(model, new GetBanerForUserResult());
 

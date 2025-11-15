@@ -5,8 +5,8 @@ namespace MizeBazi.Store.Common.Abstractions;
 
 public interface IRequestInfo
 {
-    public long UserId { get; }
+    public long UserId { get; set; }
 
-    public UserRoles Role { get;}
+    public UserRoles Role { get; set; }
 
 }

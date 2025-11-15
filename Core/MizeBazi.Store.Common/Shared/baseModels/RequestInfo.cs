@@ -7,14 +7,14 @@ public class RequestInfo : IRequestInfo
     public RequestInfo()
     {
     }
-    private RequestInfo(long userId, UserRoles role)
-    {
-        UserId = userId;
-        Role = role;
-    }
-    public static RequestInfo GetInstance(long userId, UserRoles role) => new RequestInfo(userId, role);
+    //private RequestInfo(long userId, UserRoles role)
+    //{
+    //    UserId = userId;
+    //    Role = role;
+    //}
+    //public static RequestInfo GetInstance(long userId, UserRoles role) => new RequestInfo(userId, role);
 
-    public long UserId { get; private set; }
+    public long UserId { get; set; }
 
-    public UserRoles Role { get; private set; }
+    public UserRoles Role { get; set; }
 }
