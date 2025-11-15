@@ -6,12 +6,10 @@ namespace MizeBazi.Store.Application;
 
 public class AddBanerCommandHandler(
     IBrandWrite dataSource
-    ) : ICommandHandler<AddBanerCommand, Result>
+    ) : CommandBase<AddBanerCommand, Result>
 {
 
-    public Task<Result> Handle(AddBanerCommand command)
-        => dataSource.AddAsync(command);
+    public override Task<Result> Handle(AddBanerCommand request)
+        => dataSource.AddAsync(request);
 
-    public Task<Result> Handle(AddBanerCommand command, CancellationToken cancellationToken) 
-        => throw new NotImplementedException();
 }

@@ -5,33 +5,23 @@ using MizeBazi.Store.Domain;
 
 namespace MizeBazi.Store.Application;
 
-public class AddBanerValidator(IAppLogger<AddBanerValidator> logger) : IBehaviorHandler<AddBanerCommand>
+public class AddBanerValidator(IAppLogger<AddBanerValidator> logger)
+    : BanerValidatorBase<AddBanerCommand>
 {
-    public Task Handle(AddBanerCommand command)
+    public override Task Handle(AddBanerCommand command)
     {
-        var error = new List<string>();
+        var errors = ValidateCommon(command);
 
         if (command.Id > 0)
-            error.Add(BanerConstants.ValidatError_Id);
-        if (command.Name.IsNullOrEmpty())
-            error.Add(BanerConstants.ValidatError_Name);
-        if (command.Description.IsNullOrEmpty())
-            error.Add(BanerConstants.ValidatError_Description);
-        if (command.LogoUrl.IsNullOrEmpty())
-            error.Add(BanerConstants.ValidatError_LogoUrl);
+            errors.Add(BanerConstants.ValidatError_Id);
 
-        if (error.Count > 0)
+        if (errors.Count > 0)
         {
-            string errorMessages = string.Join(":,:", error);
-            logger.LogWarning($"Exception message: {errorMessages}");
+            string errorMessages = errors.AppJoin();
+            logger.LogWarning($"Exception Add message: {errorMessages}");
             throw new ValidatorException($"Brand Add Exception: {errorMessages}");
         }
 
         return Task.CompletedTask;
-    }
-
-    public Task Handle(AddBanerCommand command, CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
     }
 } 

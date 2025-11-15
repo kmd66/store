@@ -5,33 +5,23 @@ using MizeBazi.Store.Domain;
 
 namespace MizeBazi.Store.Application;
 
-public class EditeBanerValidator(IAppLogger<EditeBanerValidator> logger) : IBehaviorHandler<EditeBanerCommand>
+public class EditeBanerValidator(IAppLogger<EditeBanerValidator> logger) 
+    : BanerValidatorBase<EditeBanerCommand>
 {
-    public Task Handle(EditeBanerCommand command)
+    public override Task Handle(EditeBanerCommand command)
     {
-        var error = new List<string>();
+        var errors = ValidateCommon(command);
 
         if (command.Id == 0)
-            error.Add(BanerConstants.ValidatError_Id);
-        if (command.Name.IsNullOrEmpty())
-            error.Add(BanerConstants.ValidatError_Name);
-        if (command.Description.IsNullOrEmpty())
-            error.Add(BanerConstants.ValidatError_Description);
-        if (command.LogoUrl.IsNullOrEmpty())
-            error.Add(BanerConstants.ValidatError_LogoUrl);
+            errors.Add(BanerConstants.ValidatError_Id);
 
-        if(error.Count > 0)
+        if(errors.Count > 0)
         {
-            string errorMessages = error.AppJoin();
-            logger.LogWarning($"Exception message: {error.AppJoin()}");
-            throw new ValidatorException($"Brand Add Exception: {errorMessages}");
+            string errorMessages = errors.AppJoin();
+            logger.LogWarning($"Exception Edite message: {errorMessages}");
+            throw new ValidatorException($"Brand Edite Exception: {errorMessages}");
         }
 
         return Task.CompletedTask;
-    }
-
-    public Task Handle(EditeBanerCommand command, CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
     }
 } 
