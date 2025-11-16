@@ -1,0 +1,25 @@
+﻿Entities
+Cart 
+CartItem 
+
+Service
+
+
+Commands 
+CreateCartCommand - ایجاد سبد خرید جدید برای کاربر
+AddItemToCartCommand - افزودن محصول به سبد خرید
+UpdateCartItemQuantityCommand - تغییر تعداد یک محصول در سبد
+RemoveItemFromCartCommand - حذف محصول از سبد
+ClearCartCommand - خالی کردن کامل سبد خرید
+
+Queries 
+GetCartByIdQuery - دریافت سبد خرید براساس شناسه
+GetCartByUserQuery - دریافت سبد خرید کاربر جاری
+GetCartItemsQuery - دریافت لیست آیتم‌های سبد خرید
+
+Repositories
+CartRepository 
+
+-------------------------------------------------
+
+

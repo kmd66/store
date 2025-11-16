@@ -1,0 +1,38 @@
+﻿Entities
+Order 
+
+Service
+OrderDomainService
+OrderPaymentService.cs - مدیریت تخصصی پرداخت‌ها
+
+Commands 
+CreateOrderCommand.cs - عملکرد: ایجاد سفارش جدید از سبد خرید
+UpdateOrderStatusCommand.cs -  تغییر وضعیت سفارش
+CancelOrderCommand.cs - لغو سفارش توسط کاربر یا ادمین
+UpdateShippingInfoCommand.cs -به‌روزرسانی اطلاعات ارسال
+
+Queries 
+GetOrderByIdQuery.cs - دریافت اطلاعات کامل یک سفارش
+GetOrdersByUserIdQuery.cs - دریافت لیست سفارشات یک کاربر
+SearchOrdersQuery.cs - جستجوی - دریافت سفارشات بر اساس وضعیت
+GetOrderStatisticsQuery.cs - آمار و گزارشات سفارشات
+
+Repositories
+OrderRepository.cs 
+
+Events 
+OrderItemUpdatedEvent - PaymentStartEvent - محاسبه 2 باره قیمت
+PaymentCompletedEvent -سرویس سفارش - کسر از انبار - بروزرسانی وضعیت سفارش - سرویس اطلاع‌رسانی
+* OrderStatusChangedEvent -نوتیفیکیشن
+OrderFailedEvent -اطلاع‌رسانی 
+OrderPaymentFailedEvent
+OrderCancelledEvent
+OrderShippedEvent ارسال 
+OrderDeliveredEvent تحویل داده
+
+
+-------------------------------------------------
+
+ 
+
+

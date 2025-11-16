@@ -23,8 +23,6 @@ GetProductsByCategoryQuery.cs - دریافت محصولات یک دسته‌بن
 GetPublishedProductsQuery.cs - دریافت محصولات منتشر شده
 GetProductStockQuery.cs - بررسی موجودی محصول
 
-
-
 Repositories
 ProductRepository.cs - ریپازیتوری محصولات
 ProductCategoryRepository.cs - ریپازیتوری ارتباطات دسته‌بندی

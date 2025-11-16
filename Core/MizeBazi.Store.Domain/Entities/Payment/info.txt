@@ -1,0 +1,36 @@
+﻿Entities
+Payment 
+
+Service
+PaymentDomainService.cs - منطق کسب‌وکار پیچیده پرداخت
+PaymentGatewayService.cs - مدیریت ارتباط با درگاه‌های پرداخت مختلف
+PaymentRollbackService -  مدیریت عملیات بازگشت پرداخت و لغو
+
+Commands 
+CreatePaymentCommand - ایجاد پرداخت جدید برای سفارش
+ProcessPaymentCommand - پردازش و اجرای پرداخت
+ConfirmPaymentCommand - تأیید پرداخت موفق
+FailPaymentCommand - ثبت پرداخت ناموفق
+CancelPaymentCommand - لغو پرداخت
+RefundPaymentCommand - بازپرداخت مبلغ
+UpdatePaymentStatusCommand - به‌روزرسانی وضعیت پرداخت
+
+Queries 
+GetPaymentByIdQuery - دریافت پرداخت بر اساس شناسه
+GetPaymentByUnicIdQuery - دریافت پرداخت بر اساس شناسه یکتا
+GetPaymentsByOrderIdQuery - دریافت پرداخت‌های یک سفارش
+GetPaymentsByDateRangeQuery - دریافت پرداخت‌ها در بازه زمانی
+SearchPaymentsQuery - جستجوی پیشرفته پرداخت‌ها با فیلتر
+GetPaymentReportQuery - گزارش‌های مالی پرداخت‌ها
+GetDailyPaymentSummaryQuery - خلاصه پرداخت‌های روزانه
+
+Repositories
+PaymentRepository.cs 
+PaymentGatewayRepository.cs
+
+-------------------------------------------------
+
+
+ 
+
+
