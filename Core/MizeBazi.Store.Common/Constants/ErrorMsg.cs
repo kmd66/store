@@ -8,6 +8,11 @@ namespace MizeBazi.Store.Common.Constants
 {
     public class ErrorMsg
     {
-        public const string DbError = "خطایی رخ داده است بعد ازچند دقیقه دوباره امتحان کنید. درصورت برطرف نشدن آن را گزارش کنید";
+        /// <summary>
+        /// هشدار امنیتی
+        /// </summary>
+        public const string SecurityAlertMsg = "Security Alert Msg";
+
+        public const string DbErrorMsg = "خطایی رخ داده است بعد ازچند دقیقه دوباره امتحان کنید. درصورت برطرف نشدن آن را گزارش کنید";
     }
 }

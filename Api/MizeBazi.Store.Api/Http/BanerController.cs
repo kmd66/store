@@ -9,7 +9,6 @@ using MizeBazi.Store.Common.Shared;
 namespace MizeBazi.Store.Api.Http;
 public class BanerController(IAppMediator mediator) : _ControllerBase
 {
-
     /// <summary>
     /// Admin  اکشن های مدیریت
     /// </summary>
@@ -33,10 +32,10 @@ public class BanerController(IAppMediator mediator) : _ControllerBase
     /// Guest  اکشن های کاربر
     /// </summary>
     [AllowAnonymous, HttpPost("getForUser")]
-    public Task<Result<GetBanerForUserResult>> GetForUser([FromBody] GetBanerQuery model)
-        => mediator.Pipeline<Result<GetBanerForUserResult>>(model);
+    public Task<GetBanerForUserResult> GetForUser([FromBody] GetBanerQuery model)
+        => mediator.Pipeline<GetBanerForUserResult>(model);
 
     [Auth(UserRoles.Guest), HttpPost("listForUser")]
-    public Task<Result<IEnumerable<ListBanerForUserResult>>> ListForUser([FromBody] ListBanerQuery model)
-        => mediator.Pipeline<Result<IEnumerable<ListBanerForUserResult>>>(model);
+    public Task<ListBanerForUserResult> ListForUser([FromBody] ListBanerQuery model)
+        => mediator.Pipeline<ListBanerForUserResult>(model);
 }

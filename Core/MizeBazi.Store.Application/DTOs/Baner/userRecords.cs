@@ -10,8 +10,12 @@ public record BaseUserBaner
     public string LogoUrl { get; init; }
     public Guid UnicId { get; init; }
 }
-public record GetBanerForUserResult : BaseUserBaner, IRequest<Result<GetBanerForUserResult>>;
-public record ListBanerForUserResult : BaseUserBaner, IRequest<Result<IEnumerable<ListBanerForUserResult>>>
+public record GetBanerForUserResult : ResultRecord
 {
+    public BaseUserBaner data { get; init; }
+};
+public record ListBanerForUserResult : ResultRecord
+{
+    public IEnumerable<BaseUserBaner> data { get; init; }
     public int TotalCount { get; init; }
 };

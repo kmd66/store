@@ -1,4 +1,12 @@
 ﻿namespace MizeBazi.Store.Common.Shared;
+public record ResultRecord
+{
+    public bool success { get; init; }
+    public int code { get; init; }
+    public string message { get; init; }
+}
+
+
 public class Result
 {
     public override string ToString()
@@ -70,8 +78,6 @@ public class Result
 
 public class Result<T> : Result
 {
-    public int TotalCount { get; set; }
-
     public T data
     {
         get { return (T)_data; }
@@ -79,26 +85,26 @@ public class Result<T> : Result
     }
 
     public static Result<T> Set(bool success, int code = 0, string message = "", T data = default, int totalCount = 0)
-        => new() { success = success, code = code, message = message, data = data, TotalCount = totalCount };
+        => new() { success = success, code = code, message = message, data = data/*, TotalCount = totalCount */};
 
     public static Task<Result<T>> SetAsync(bool success, int code = 0, string message = "", T data = default)
-        => Task.FromResult(new Result<T> { success = success, code = code, message = message, data = data, TotalCount = 0 });
+        => Task.FromResult(new Result<T> { success = success, code = code, message = message, data = data/*, TotalCount = 0 */});
 
     public static Result<T> Failure(int code = -1, string message = "", T data = default)
-        => new () { success = false, code = code, message = message, data = data, TotalCount = 0 };
+        => new () { success = false, code = code, message = message, data = data/*, TotalCount = 0*/ };
 
     //public static Result<T> Failure(int code = -1, List<string> errors = null, T data = default(T))
     //    => new Result<T> { success = false, code = code, Errors = errors, data = data, TotalCount = 0 };
 
     public static Task<Result<T>> FailureAsync(int code = -1, string message = "", T data = default)
-        => Task.FromResult(new Result<T> { success = false, code = code, message = message, data = data, TotalCount = 0 });
+        => Task.FromResult(new Result<T> { success = false, code = code, message = message, data = data/*, TotalCount = 0 */});
 
     //public static Task<Result<T>> FailureAsync(int code = -1, List<string> errors = null, T data = default(T))
     //    => Task.FromResult(new Result<T> { success = false, code = code, Errors = errors, data = data, TotalCount = 0 });
 
     public static Result<T> Successful(int code = 0, string message = "", T data = default)
-        => new() { success = true, code = code, message = message, data = data, TotalCount = 0 };
+        => new() { success = true, code = code, message = message, data = data/*, TotalCount = 0*/ };
 
     public static Task<Result<T>> SuccessfulAsync(int code = 0, string message = "", T data = default)
-        => Task.FromResult(new Result<T> { success = true, code = code, message = message, data = data, TotalCount = 0 });
+        => Task.FromResult(new Result<T> { success = true, code = code, message = message, data = data/*, TotalCount = 0 */});
 }
