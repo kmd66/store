@@ -1,4 +1,6 @@
 ﻿using MizeBazi.Store.Common.Abstractions;
+using MizeBazi.Store.Common.Shared;
+using System;
 using System.Reflection;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
@@ -21,7 +23,7 @@ public class MediatorAdapter(IServiceProvider provider) : MediatorAdapterBase(pr
         }
         catch (Exception e)
         {
-            throw new Exception();
+            throw e.ExceptionHandler();
         }
     }
 
@@ -38,7 +40,7 @@ public class MediatorAdapter(IServiceProvider provider) : MediatorAdapterBase(pr
         }
         catch (Exception e)
         {
-            throw new Exception();
+            throw e.ExceptionHandler();
         }
     }
 
@@ -55,7 +57,7 @@ public class MediatorAdapter(IServiceProvider provider) : MediatorAdapterBase(pr
                 throw new InvalidOperationException($"No handler registered for {handlerType.FullName}");
             }
 
-            await CallBehavior(handlerInfo.ResponseType, request, cancellationToken);
+            await CallBehavior(request.GetType(), request, cancellationToken);
 
             var response = await CallHandleDynamic(
                 handlerInfo.ResponseType,
@@ -68,9 +70,8 @@ public class MediatorAdapter(IServiceProvider provider) : MediatorAdapterBase(pr
         }
         catch (Exception e)
         {
-            throw new Exception();
+            throw e.ExceptionHandler(); 
         }
-
     }
 
 
