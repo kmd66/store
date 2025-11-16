@@ -3,8 +3,13 @@
 namespace MizeBazi.Store.Common.Abstractions;
 public record GetHandlerModel(Type ModelType, object Handler);
 public record GetPiplineHandlerModel(Type ReqInterface, Type RequestInterface, Type ResponseType, Type ResponseType1, object Handler);
-public abstract class MediatorAdapterBase(IServiceProvider provider)
+public abstract class MediatorAdapterBase
 {
+    protected readonly IServiceProvider provider;
+    public MediatorAdapterBase(IServiceProvider p) 
+    {
+        provider = p;
+    }
 
     protected GetPiplineHandlerModel GetPiplineHandler<TAfterBehavior>(IRequest request)
     {

@@ -6,9 +6,11 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace MizeBazi.Store.Api.Helper;
 
-public class MediatorAdapter(IServiceProvider provider) : MediatorAdapterBase(provider: provider), IAppMediator
+public class MediatorAdapter: MediatorAdapterBase, IAppMediator
 {
-
+    public MediatorAdapter(IServiceProvider provider) : base(provider)
+    {
+    }
 
     public async Task<TResponse> Send<TResponse>(
         ICommand<TResponse> command,

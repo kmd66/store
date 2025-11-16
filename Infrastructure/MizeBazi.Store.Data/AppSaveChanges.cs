@@ -9,12 +9,12 @@ public class AppSaveChanges : SaveChangesInterceptor
     private void UpdateTimestamps(DbContext context)
     {
         var entries = context.ChangeTracker.Entries()
-            .Where(e => e.Entity is BaseEntity && (
+            .Where(e => e.Entity is BaseDbEntity && (
                 e.State == EntityState.Added || e.State == EntityState.Modified || e.State == EntityState.Deleted));
 
         foreach (var entityEntry in entries)
         {
-            var entity = (BaseEntity)entityEntry.Entity;
+            var entity = (BaseDbEntity)entityEntry.Entity;
 
             if (entityEntry.State == EntityState.Added)
             {
