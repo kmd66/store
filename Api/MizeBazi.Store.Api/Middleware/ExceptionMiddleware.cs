@@ -26,39 +26,8 @@ public class ExceptionMiddleware(RequestDelegate next)
         var response = context.Response;
         response.ContentType = "application/json";
 
-        var errorResponse = AppException.Response(exception.Message);
-
-        switch (exception)
-        {
-            case AppTokenException:
-            case UnauthorizedAccessException:
-                errorResponse = AppTokenException.Response();
-                break;
-
-            case AppNotFoundException:
-            case KeyNotFoundException:
-                errorResponse = AppNotFoundException.Response();
-                break;
-
-            case ArgumentException:
-            case InvalidOperationException:
-                errorResponse = AppException.Response(exception.Message,code:400); 
-                break;
-
-            case AppTimeoutException:
-            case TimeoutException:
-                errorResponse = AppTimeoutException.Response(); 
-                break;
-
-            case DbException:
-            case ValidatorException:
-                errorResponse = DbException.Response(exception.Message);
-                break;
-
-            default:
-                errorResponse = AppException.Response(exception.Message, code: 500);
-                break;
-        }
+        var ex = exception.ExceptionHandler();
+        var errorResponse = ex.Record;
 
         if (errorResponse.code != -1)
         {
