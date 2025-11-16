@@ -1,0 +1,21 @@
+﻿using MizeBazi.Store.Common.Abstractions;
+using MizeBazi.Store.Common.Shared;
+
+namespace MizeBazi.Store.Application;
+
+public record BaseUserCategory
+{
+    public string Name { get; init; }
+    public string Description { get; init; }
+    public string LogoUrl { get; init; }
+    public Guid UnicId { get; init; }
+}
+public record GetCategoryForUserResult : ResultRecord
+{
+    public BaseUserCategory data { get; init; }
+};
+public record ListCategoryForUserResult : ResultRecord
+{
+    public IEnumerable<BaseUserCategory> data { get; init; }
+    public int TotalCount { get; init; }
+};

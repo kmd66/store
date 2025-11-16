@@ -6,36 +6,36 @@ using MizeBazi.Store.Common.Shared;
 
 namespace MizeBazi.Store.Data.Repositories;
 
-public class BrandWrite(StoreContext context) : IBrandWrite
+public class CategoryWrite(StoreContext context) : ICategoryWrite
 {
     readonly StoreContext _context = context;
 
-    public async Task<Result> AddAsync(AddBanerCommand model, CancellationToken cancellationToken = default)
+    public async Task<Result> AddAsync(AddCategoryCommand model, CancellationToken cancellationToken = default)
     {
         try
         {
-            var brand = model.JsonMapObject<Entities.Brand>();
-            brand.UnicId = Guid.NewGuid();
-            brand.Date = DateTime.UtcNow;
-            brand.IsDeleted = false;
-            brand.DeletedDate = null;
+            var Category = model.JsonMapObject<Entities.Category>();
+            Category.UnicId = Guid.NewGuid();
+            Category.Date = DateTime.UtcNow;
+            Category.IsDeleted = false;
+            Category.DeletedDate = null;
             
-            _context.Brands.Add(brand);
+            _context.Categorys.Add(Category);
             await _context.SaveChangesAsync(cancellationToken);
 
             return Result.Successful();
         }
         catch (Exception ex)
         {
-            throw new DbException($"Brand Add Exception {ex.Message}");
+            throw new DbException($"Category Add Exception {ex.Message}");
         }
     }
 
-    public async Task<Result> EditeAsync(EditeBanerCommand model, CancellationToken cancellationToken = default)
+    public async Task<Result> EditeAsync(EditeCategoryCommand model, CancellationToken cancellationToken = default)
     {
         try
         {
-            var ett = await _context.Brands.FirstOrDefaultAsync(x =>
+            var ett = await _context.Categorys.FirstOrDefaultAsync(x =>
                 x.Id == model.Id, 
                 cancellationToken
             );
@@ -45,7 +45,7 @@ public class BrandWrite(StoreContext context) : IBrandWrite
 
             ett.Name = model.Name;
             ett.Description = model.Description;
-            ett.LogoUrl = model.LogoUrl;
+            ett.ImageUrl = model.ImageUrl;
             _context.Update(ett);
             await _context.SaveChangesAsync();
             return Result.Successful();
@@ -53,7 +53,7 @@ public class BrandWrite(StoreContext context) : IBrandWrite
         }
         catch (Exception ex)
         {
-            throw new DbException($"Brand Edite Exception {ex.Message}");
+            throw new DbException($"Category Edite Exception {ex.Message}");
         }
     }
 }

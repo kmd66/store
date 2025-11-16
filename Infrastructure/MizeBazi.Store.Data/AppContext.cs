@@ -23,7 +23,7 @@ public class StoreContext : DbContext
         }
     }
 
-    internal DbSet<Category> Categories { get; set; }
+    internal DbSet<Category> Categorys { get; set; }
     internal DbSet<Brand> Brands { get; set; }
     internal DbSet<Product> Products { get; set; }
     internal DbSet<Cart> Carts { get; set; }
