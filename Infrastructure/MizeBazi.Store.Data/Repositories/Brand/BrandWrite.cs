@@ -10,7 +10,7 @@ public class BrandWrite(StoreContext context) : IBrandWrite
 {
     readonly StoreContext _context = context;
 
-    public async Task<Result> AddAsync(AddBanerCommand model, CancellationToken cancellationToken = default)
+    public async Task<Result> AddAsync(AddBrandCommand model, CancellationToken cancellationToken = default)
     {
         try
         {
@@ -31,7 +31,7 @@ public class BrandWrite(StoreContext context) : IBrandWrite
         }
     }
 
-    public async Task<Result> EditeAsync(EditeBanerCommand model, CancellationToken cancellationToken = default)
+    public async Task<Result> EditeAsync(EditeBrandCommand model, CancellationToken cancellationToken = default)
     {
         try
         {

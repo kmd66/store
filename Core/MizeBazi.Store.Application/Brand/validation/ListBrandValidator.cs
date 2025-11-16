@@ -5,13 +5,13 @@ using MizeBazi.Store.Common.Shared;
 
 namespace MizeBazi.Store.Application;
 
-public class ListBanerValidator(
-    IAppLogger<ListBanerQuery> logger,
+public class ListBrandValidator(
+    IAppLogger<ListBrandQuery> logger,
     IRequestInfo requestInfo
 ) 
-    : BehaviorBase<ListBanerQuery>
+    : BehaviorBase<ListBrandQuery>
 {
-    public override Task Handle(ListBanerQuery query)
+    public override Task Handle(ListBrandQuery query)
     {
         if(requestInfo.Role != UserRoles.Admin)
         {

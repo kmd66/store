@@ -9,7 +9,7 @@ namespace MizeBazi.Store.Data.Repositories;
 
 public class BrandRead : IBrandRead
 {
-    public async Task<Result<GetBanerResult>> GetAsync(GetBanerQuery model, CancellationToken cancellationToken = default)
+    public async Task<Result<GetBrandResult>> GetAsync(GetBrandQuery model, CancellationToken cancellationToken = default)
     {
         try
         {
@@ -24,9 +24,9 @@ public class BrandRead : IBrandRead
                     cancellationToken: cancellationToken
                 );
 
-                var result = await connection.QueryAsync<GetBanerResult>(query);
+                var result = await connection.QueryAsync<GetBrandResult>(query);
 
-                return Result<GetBanerResult>.Successful(data: result.FirstOrDefault());
+                return Result<GetBrandResult>.Successful(data: result.FirstOrDefault());
             }
         }
         catch (Exception ex)
@@ -36,7 +36,7 @@ public class BrandRead : IBrandRead
     }
 
 
-    public async Task<Result<IEnumerable<ListBanerResult>>> ListAsync(ListBanerQuery model, CancellationToken cancellationToken = default)
+    public async Task<Result<IEnumerable<ListBrandResult>>> ListAsync(ListBrandQuery model, CancellationToken cancellationToken = default)
     {
         try
         {
@@ -53,9 +53,9 @@ public class BrandRead : IBrandRead
                     cancellationToken: cancellationToken
                 );
 
-                var result = await connection.QueryAsync<ListBanerResult>(query);
+                var result = await connection.QueryAsync<ListBrandResult>(query);
 
-                return Result<IEnumerable<ListBanerResult>>.Successful(data: result);
+                return Result<IEnumerable<ListBrandResult>>.Successful(data: result);
             }
         }
         catch (Exception ex)

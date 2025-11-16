@@ -5,15 +5,15 @@ using MizeBazi.Store.Domain;
 
 namespace MizeBazi.Store.Application;
 
-public class AddBanerValidator(IAppLogger<AddBanerValidator> logger)
-    : BanerValidatorBase<AddBanerCommand>
+public class AddBrandValidator(IAppLogger<AddBrandValidator> logger)
+    : BrandValidatorBase<AddBrandCommand>
 {
-    public override Task Handle(AddBanerCommand command)
+    public override Task Handle(AddBrandCommand command)
     {
         var errors = ValidateCommon(command);
 
         if (command.Id > 0)
-            errors.Add(BanerConstants.ValidatError_Id);
+            errors.Add(BrandConstants.ValidatError_Id);
 
         if (errors.Count > 0)
         {

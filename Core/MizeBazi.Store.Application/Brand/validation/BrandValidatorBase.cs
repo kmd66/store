@@ -4,18 +4,18 @@ using MizeBazi.Store.Domain;
 
 namespace MizeBazi.Store.Application;
 
-public abstract class BanerValidatorBase<T> : BehaviorBase<T>
+public abstract class BrandValidatorBase<T> : BehaviorBase<T>
 {
-    protected List<string> ValidateCommon(BaseBanerRecordModel command)
+    protected List<string> ValidateCommon(BaseBrandRecordModel command)
     {
         var errors = new List<string>();
 
         if (command.Name.IsNullOrEmpty())
-            errors.Add(BanerConstants.ValidatError_Name);
+            errors.Add(BrandConstants.ValidatError_Name);
         if (command.Description.IsNullOrEmpty())
-            errors.Add(BanerConstants.ValidatError_Description);
+            errors.Add(BrandConstants.ValidatError_Description);
         if (command.LogoUrl.IsNullOrEmpty())
-            errors.Add(BanerConstants.ValidatError_LogoUrl);
+            errors.Add(BrandConstants.ValidatError_LogoUrl);
 
         return errors;
     }

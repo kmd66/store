@@ -3,19 +3,19 @@ using MizeBazi.Store.Common.Shared;
 
 namespace MizeBazi.Store.Application;
 
-public record BaseUserBaner
+public record BaseUserBrand
 {
     public string Name { get; init; }
     public string Description { get; init; }
     public string LogoUrl { get; init; }
     public Guid UnicId { get; init; }
 }
-public record GetBanerForUserResult : ResultRecord
+public record GetBrandForUserResult : ResultRecord
 {
-    public BaseUserBaner data { get; init; }
+    public BaseUserBrand data { get; init; }
 };
-public record ListBanerForUserResult : ResultRecord
+public record ListBrandForUserResult : ResultRecord
 {
-    public IEnumerable<BaseUserBaner> data { get; init; }
+    public IEnumerable<BaseUserBrand> data { get; init; }
     public int TotalCount { get; init; }
 };

@@ -4,7 +4,7 @@ namespace MizeBazi.Store.Application.Interfaces;
 
 public interface IBrandWrite
 {
-    Task<Result> AddAsync(AddBanerCommand brand, CancellationToken cancellationToken = default);
+    Task<Result> AddAsync(AddBrandCommand brand, CancellationToken cancellationToken = default);
 
-    Task<Result> EditeAsync(EditeBanerCommand brand, CancellationToken cancellationToken = default);
+    Task<Result> EditeAsync(EditeBrandCommand brand, CancellationToken cancellationToken = default);
 }

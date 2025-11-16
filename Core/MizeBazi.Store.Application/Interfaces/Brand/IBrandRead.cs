@@ -5,8 +5,8 @@ namespace MizeBazi.Store.Application.Interfaces;
 
 public interface IBrandRead
 {
-    Task<Result<GetBanerResult>> GetAsync(GetBanerQuery model, CancellationToken cancellationToken = default);
+    Task<Result<GetBrandResult>> GetAsync(GetBrandQuery model, CancellationToken cancellationToken = default);
 
-    Task<Result<IEnumerable<ListBanerResult>>> ListAsync(ListBanerQuery model, CancellationToken cancellationToken = default);
+    Task<Result<IEnumerable<ListBrandResult>>> ListAsync(ListBrandQuery model, CancellationToken cancellationToken = default);
 
 }

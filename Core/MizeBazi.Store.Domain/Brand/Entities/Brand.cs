@@ -1,5 +1,4 @@
-﻿
-using MizeBazi.Store.Common.Helper;
+﻿using MizeBazi.Store.Common.Helper;
 using MizeBazi.Store.Common.Shared;
 
 namespace MizeBazi.Store.Domain;

@@ -4,12 +4,11 @@ using MizeBazi.Store.Common.Shared;
 
 namespace MizeBazi.Store.Application;
 
-public class AddBanerCommandHandler(
+public class EditBrandCommandHandler(
     IBrandWrite dataSource
-    ) : CommandBase<AddBanerCommand, Result>
+    ) : CommandBase<EditeBrandCommand, Result>
 {
 
-    public override Task<Result> Handle(AddBanerCommand request)
-        => dataSource.AddAsync(request);
-
+    public override Task<Result> Handle(EditeBrandCommand command)
+        => dataSource.EditeAsync(command);
 }

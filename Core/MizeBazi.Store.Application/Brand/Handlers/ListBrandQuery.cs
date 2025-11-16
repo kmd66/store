@@ -5,11 +5,11 @@ using MizeBazi.Store.Common.Shared;
 namespace MizeBazi.Store.Application;
 
 
-public class ListBanerQueryHandler(
+public class ListBrandQueryHandler(
     IBrandRead dataSource
-    ) : QueryBase<ListBanerQuery, Result<IEnumerable<ListBanerResult>>>
+    ) : QueryBase<ListBrandQuery, Result<IEnumerable<ListBrandResult>>>
 {
 
-    public override Task<Result<IEnumerable<ListBanerResult>>> Handle(ListBanerQuery query)
+    public override Task<Result<IEnumerable<ListBrandResult>>> Handle(ListBrandQuery query)
         => dataSource.ListAsync(query);
 }
