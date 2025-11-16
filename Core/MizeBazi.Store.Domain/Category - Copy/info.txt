@@ -1,0 +1,47 @@
+﻿Entities
+Product => ProductBasicInfo - ProductImage - ProductInventory - ProductPricing 
+ProductCategory
+
+Service
+ProductDomainService.cs - منطق کسب‌وکار پیچیده محصول
+ProductStockService.cs - مدیریت موجودی و انبار
+
+Commands 
+CreateProductCommand.cs - ایجاد محصول جدید
+UpdateProductCommand.cs - به‌روزرسانی محصول
+DeleteProductCommand.cs - حذف محصول
+PublishProductCommand.cs - انتشار/عدم انتشار محصول
+UpdateProductStockCommand.cs - به‌روزرسانی موجودی
+ManageProductCategoriesCommand.cs - مدیریت دسته‌بندی‌های محصول
+UpdateProductImagesCommand.cs - مدیریت تصاویر محصول
+
+Queries 
+GetProductByIdQuery.cs - دریافت محصول بر اساس ID
+GetProductBySkuQuery.cs - دریافت محصول بر اساس کد SKU
+SearchProductsQuery.cs - جستجوی محصولات با فیلتر
+GetProductsByCategoryQuery.cs - دریافت محصولات یک دسته‌بندی
+GetPublishedProductsQuery.cs - دریافت محصولات منتشر شده
+GetProductStockQuery.cs - بررسی موجودی محصول
+
+
+
+Repositories
+ProductRepository.cs - ریپازیتوری محصولات
+ProductCategoryRepository.cs - ریپازیتوری ارتباطات دسته‌بندی
+
+-------------------------------------------------
+
+رزرو موجودی برای سفارش با چند محصول
+برنامه‌ریزی انتقال
+
+-------------------------------------------------
+
+مدیریت تصاویر محصول
+انتشار محصول
+کاهش موجودی یک محصول
+
+-------------------------------------------------
+
+ 
+
+
