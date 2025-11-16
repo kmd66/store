@@ -12,7 +12,7 @@ public class DbProduct : SoftDeleteEntity
 
     public string Description { get; set; }
 
-    public int StockQuantity { get; set; } //موجودی انبار
+    public int Quantity { get; set; } //موجودی انبار
 
     public string SKU { get; set; } // کد کالا
 

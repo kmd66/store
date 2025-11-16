@@ -4,7 +4,6 @@ using MizeBazi.Store.Common.Shared;
 
 namespace MizeBazi.Store.Application;
 
-
 public class ListBrandQueryHandler(
     IBrandRead dataSource
     ) : QueryBase<ListBrandQuery, Result<IEnumerable<ListBrandResult>>>
