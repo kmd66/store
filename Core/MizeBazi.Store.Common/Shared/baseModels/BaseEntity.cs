@@ -2,10 +2,18 @@
 
 namespace MizeBazi.Store.Common.Shared;
 
-public abstract class  Entity
+public abstract class BaseEntity
 {
+    public long Id { get; set; }
+    public Guid UnicId { get; set; }
+
+}
+public abstract class Entity : BaseEntity
+{
+    public DateTime Date { get; set; } = DateTime.UtcNow;
+
     protected readonly List<DomainEvent> _listEvents = new();
-    protected bool IsConfirmed  = false;
+    protected bool IsConfirmed = false;
 
     public List<DomainEvent> DomainEvents() => _listEvents;
 
@@ -15,17 +23,17 @@ public abstract class  Entity
     }
 
     public void ClearDomainEvents() => _listEvents.Clear();
-
 }
 
-public abstract class BaseEntity: Entity
+public abstract class AggregateRoot : BaseEntity { }
+
+
+public abstract class BaseDbEntity: BaseEntity
 {
-    public long Id { get; set; }
-    public Guid UnicId { get; set; }
     public DateTime Date { get; set; } = DateTime.UtcNow;
 }
 
-public abstract class SoftDeleteEntity : BaseEntity
+public abstract class SoftDeleteEntity : BaseDbEntity
 {
     public bool IsDeleted { get; set; } = false;
     public DateTime? DeletedDate { get; set; }

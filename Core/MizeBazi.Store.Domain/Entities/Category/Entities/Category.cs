@@ -14,10 +14,5 @@ public class Category : DbCategory
         Description = description;
         ImageUrl = imageUrl;
     }
-
-    public override void Confirm(Common.Shared.EventType t)
-    {
-        base.Confirm(t);
-    }
 }
 

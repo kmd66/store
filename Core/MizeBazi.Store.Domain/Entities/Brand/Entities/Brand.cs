@@ -14,10 +14,5 @@ public class Brand : DbBrand
         Description = description;
         LogoUrl = logoUrl;
     }
-
-    public override void Confirm(Common.Shared.EventType t)
-    {
-        base.Confirm(t);
-    }
 }
 
