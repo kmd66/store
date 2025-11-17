@@ -8,24 +8,25 @@ ProductStockService.cs - مدیریت موجودی و انبار
 
 Commands 
 CreateProductCommand.cs - ایجاد محصول جدید
-UpdateProductCommand.cs - به‌روزرسانی محصول
+EditeProductCommand.cs - به‌روزرسانی محصول
+EditeProductCategoriesCommand.cs 
 DeleteProductCommand.cs - حذف محصول
 PublishProductCommand.cs - انتشار/عدم انتشار محصول
-UpdateProductStockCommand.cs - به‌روزرسانی موجودی
-ManageProductCategoriesCommand.cs - مدیریت دسته‌بندی‌های محصول
-UpdateProductImagesCommand.cs - مدیریت تصاویر محصول
+*UpdateProductStockCommand.cs - به‌روزرسانی موجودی
+*ManageProductCategoriesCommand.cs - مدیریت دسته‌بندی‌های محصول
+*UpdateProductImagesCommand.cs - مدیریت تصاویر محصول
 
 Queries 
 GetProductByIdQuery.cs - دریافت محصول بر اساس ID
 GetProductBySkuQuery.cs - دریافت محصول بر اساس کد SKU
-SearchProductsQuery.cs - جستجوی محصولات با فیلتر
-GetProductsByCategoryQuery.cs - دریافت محصولات یک دسته‌بندی
-GetPublishedProductsQuery.cs - دریافت محصولات منتشر شده
+ListProductsQuery.cs - جستجوی محصولات با فیلتر
+*GetProductsByCategoryQuery.cs - دریافت محصولات یک دسته‌بندی
+*GetPublishedProductsQuery.cs - دریافت محصولات منتشر شده
 GetProductStockQuery.cs - بررسی موجودی محصول
 
 Repositories
 ProductRepository.cs - ریپازیتوری محصولات
-ProductCategoryRepository.cs - ریپازیتوری ارتباطات دسته‌بندی
+*ProductCategoryRepository.cs - ریپازیتوری ارتباطات دسته‌بندی
 
 -------------------------------------------------
 

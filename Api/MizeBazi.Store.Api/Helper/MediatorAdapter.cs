@@ -46,7 +46,7 @@ public class MediatorAdapter: MediatorAdapterBase, IAppMediator
         }
     }
 
-    public async Task<TAfterBehavior> Pipeline<TAfterBehavior>(IRequest request, CancellationToken cancellationToken = default)
+    public async Task<TAfterBehavior> Pipline<TAfterBehavior>(IRequest request, CancellationToken cancellationToken = default)
     {
         try
         {

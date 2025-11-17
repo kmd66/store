@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MizeBazi.Store.Api.Middleware;
 using MizeBazi.Store.Application;
 using MizeBazi.Store.Common.Abstractions;
-using MizeBazi.Store.Common.Helper;
 using MizeBazi.Store.Common.Shared;
 
 namespace MizeBazi.Store.Api.Http;
@@ -33,9 +31,9 @@ public class CategoryController(IAppMediator mediator) : _ControllerBase
     /// </summary>
     [AllowAnonymous, HttpPost("getForUser")]
     public Task<GetCategoryForUserResult> GetForUser([FromBody] GetCategoryQuery model)
-        => mediator.Pipeline<GetCategoryForUserResult>(model);
+        => mediator.Pipline<GetCategoryForUserResult>(model);
 
-    [Auth(UserRoles.Guest), HttpPost("listForUser")]
+    [AllowAnonymous, HttpPost("listForUser")]
     public Task<ListCategoryForUserResult> ListForUser([FromBody] ListCategoryQuery model)
-        => mediator.Pipeline<ListCategoryForUserResult>(model);
+        => mediator.Pipline<ListCategoryForUserResult>(model);
 }

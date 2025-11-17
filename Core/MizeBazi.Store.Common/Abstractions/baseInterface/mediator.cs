@@ -99,7 +99,7 @@ public interface IAppMediator
         IRequest<TAfterBehavior> afterBehavior = null,
         CancellationToken cancellationToken = default
     );
-    Task<TAfterBehavior> Pipeline<TAfterBehavior>(
+    Task<TAfterBehavior> Pipline<TAfterBehavior>(
         IRequest request,
         CancellationToken cancellationToken = default
     );

@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using MizeBazi.Store.Api.Middleware;
 using MizeBazi.Store.Application;
 using MizeBazi.Store.Common.Abstractions;
-using MizeBazi.Store.Common.Helper;
 using MizeBazi.Store.Common.Shared;
 
 namespace MizeBazi.Store.Api.Http;
@@ -33,9 +32,9 @@ public class BrandController(IAppMediator mediator) : _ControllerBase
     /// </summary>
     [AllowAnonymous, HttpPost("getForUser")]
     public Task<GetBrandForUserResult> GetForUser([FromBody] GetBrandQuery model)
-        => mediator.Pipeline<GetBrandForUserResult>(model);
+        => mediator.Pipline<GetBrandForUserResult>(model);
 
     [Auth(UserRoles.Guest), HttpPost("listForUser")]
     public Task<ListBrandForUserResult> ListForUser([FromBody] ListBrandQuery model)
-        => mediator.Pipeline<ListBrandForUserResult>(model);
+        => mediator.Pipline<ListBrandForUserResult>(model);
 }
