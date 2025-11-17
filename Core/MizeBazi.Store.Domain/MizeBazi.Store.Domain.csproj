@@ -6,16 +6,8 @@
     <!--<Nullable>enable</Nullable>-->
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Category - Copy\**" />
-    <EmbeddedResource Remove="Category - Copy\**" />
-    <None Remove="Category - Copy\**" />
-  </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Entities\Brand\Product\" />
-    <Folder Include="Entities\Brand\Events\" />
-    <Folder Include="Entities\Category\Events\" />
     <Folder Include="Enums\" />
     <Folder Include="Interfaces\" />
   </ItemGroup>
