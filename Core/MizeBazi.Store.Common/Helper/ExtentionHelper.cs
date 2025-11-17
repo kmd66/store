@@ -54,7 +54,7 @@ public static class ExtentionHelper
     }
     public static bool IsNullOrEmpty(this string v)
     {
-        return string.IsNullOrEmpty(v);
+        return string.IsNullOrWhiteSpace(v);
     }
 
 }

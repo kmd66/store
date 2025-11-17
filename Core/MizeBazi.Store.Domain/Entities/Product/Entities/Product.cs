@@ -1,23 +1,33 @@
-﻿//using MizeBazi.Store.Common.Helper;
-//using MizeBazi.Store.Common.Shared;
+﻿using MizeBazi.Store.Common.Shared;
 
-//namespace MizeBazi.Store.Domain;
+namespace MizeBazi.Store.Domain;
 
-//public class Category : DbCategory
-//{
-//    public Category() { }
-//    public static Category CreateFromBaseModel(BaseEntityRecord model) => model.JsonMapObject<Category>();
+public class Product : AggregateRoot
+{
+    public ProductBasicInfo BasicInfo { get; private set; }
 
-//    public Category(string name, string description, string imageUrl)
-//    {
-//        Name = name;
-//        Description = description;
-//        ImageUrl = imageUrl;
-//    }
+    public ProductPricing Pricing { get; private set; }
 
-//    public override void Confirm(Common.Shared.EventType t)
-//    {
-//        base.Confirm(t);
-//    }
-//}
+    public Sku SKU { get; private set; }
+
+    public ProductImages Imgs { get; private set; }
+
+    private List<ProductCategory> _categories = new();
+    public IReadOnlyList<ProductCategory> Categories => _categories.AsReadOnly();
+    
+    public Product(long id, Guid unicId, DateTime date,
+        ProductBasicInfo basicInfo,
+        ProductPricing pricing,
+        Sku sku,
+        ProductImages images,
+        List<ProductCategory> categoryIds
+        ) : base(id, unicId, date)
+    {
+        BasicInfo = basicInfo;
+        Pricing = pricing;
+        SKU = sku;
+        Imgs = images;
+        _categories = categoryIds;
+    }
+}
 
