@@ -12,13 +12,7 @@ public class GetCategoryQueryHandler(
 {
 
     public override Task<Result<GetCategoryResult>> Handle(GetCategoryQuery query){
-
-        if (query.Id == null && query.UnicId == null)
-        {
-            logger.LogWarning($"Exception message: {CategoryConstants.ValidatError_Id}");
-            throw new ValidatorException($"Brand Get Exception: {CategoryConstants.ValidatError_Id}");
-        }
-        
+        query.Check(logger, BrandConstants.ValidatError_Id);
         return dataSource.GetAsync(query);
     }
 }

@@ -12,13 +12,7 @@ public class GetBrandQueryHandler(
 {
 
     public override Task<Result<GetBrandResult>> Handle(GetBrandQuery query){
-
-        if (query.Id == null && query.UnicId == null)
-        {
-            logger.LogWarning($"Exception message: {BrandConstants.ValidatError_Id}");
-            throw new ValidatorException($"Brand Get Exception: {BrandConstants.ValidatError_Id}");
-        }
-        
+        query.Check(logger, BrandConstants.ValidatError_Id);
         return dataSource.GetAsync(query);
     }
 }
