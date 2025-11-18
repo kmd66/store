@@ -18,8 +18,10 @@ public abstract class MediatorAdapterBase
         var requestInterface = request.GetType().GetInterfaces()
         .First(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IRequest<>))
         .GetGenericArguments()[0];
-
-        var responseType1 = requestInterface.GetGenericArguments()[0];
+        
+        var responseType1 = requestInterface;
+        if (requestInterface.IsGenericTypeDefinition)
+        responseType1 = requestInterface.GetGenericArguments()[0];
         var responseType = reqInterface.GetGenericArguments()[0];
 
         var afterHandlerType = typeof(IPipelineBehavior<,>).MakeGenericType(requestInterface, typeof(TAfterBehavior));
