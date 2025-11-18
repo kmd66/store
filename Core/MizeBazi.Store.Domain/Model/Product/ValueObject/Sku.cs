@@ -6,7 +6,7 @@ namespace MizeBazi.Store.Domain;
 
 public class Sku : ValueObject
 {
-    private const int Length = 8;
+    private const int Length = 10;
 
     public string Value { get; }
 
@@ -23,10 +23,10 @@ public class Sku : ValueObject
         if (code == 0 && code < 1000)
             throw new ValidatorException(ProductConstants.Error_SkuCode);
 
-        var categoryPart = categoryCode.ToString("D2").Substring(0, 2);
+        var categoryPart = categoryCode.ToString("D3").Substring(0, 3);
         var codePart = code.ToString("D4").Substring(0, 4);
 
-        var value = $"MZ:{categoryCode}-{code}";
+        var value = $"M:{categoryPart}-{codePart}";
         return Validation(value);
     }
 
@@ -40,8 +40,8 @@ public class Sku : ValueObject
         if (value.Length != Length)
             throw new ValidatorException(ProductConstants.Error_SkuLength);
 
-        if (!IsValidFormat(value))
-            throw new ValidatorException(ProductConstants.Error_SkuFormat);
+        //if (!IsValidFormat(value))
+        //    throw new ValidatorException(ProductConstants.Error_SkuFormat);
 
         value = value.Trim().ToUpper();
         return new Sku(value);

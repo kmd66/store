@@ -1,4 +1,6 @@
-﻿using MizeBazi.Store.Common.Shared;
+﻿using MizeBazi.Store.Common.Helper;
+using MizeBazi.Store.Common.Shared;
+using System.Text.Json;
 
 namespace MizeBazi.Store.Application;
 
@@ -19,8 +21,7 @@ public abstract record BaseProductUserRecord
     public int Quantity { get; init; }
 
     public string SKU { get; init; }
-
-    public long BrandId { get; init; }
+    public string BrandName { get; init; }
 }
 public abstract record BaseProductRecord : BaseProductUserRecord
 {
@@ -29,18 +30,29 @@ public abstract record BaseProductRecord : BaseProductUserRecord
     public bool IsDeleted { get; init; }
     public DateTime? DeletedDate { get; init; }
 
+    public long BrandId { get; init; }
     public bool IsPublished { get; init; }
 }
 public record BaseUserProductResult: BaseProductUserRecord
 {
-    public long BrandName { get; init; }
-    public long CategoryName { get; init; }
+    public int TotalCount { get; init; }
+    public string CategoriesJson { get; init; }
+    public List<CategoryForProdact> Categories => CategoriesJson.IsNullOrEmpty()
+          ? new List<CategoryForProdact>()
+          : JsonSerializer.Deserialize<List<CategoryForProdact>>(CategoriesJson);
 }
 
 public record BaseProductResult: BaseProductRecord
 {
-    public long BrandName { get; init; }
-    public long CategoryName { get; init; }
+    public int TotalCount { get; init; }
+    public string CategoriesJson { get; init; }
+    public List<CategoryForProdact> Categories => CategoriesJson.IsNullOrEmpty()
+          ? new List<CategoryForProdact>()
+          : JsonSerializer.Deserialize<List<CategoryForProdact>>(CategoriesJson);
 }
 
-
+public record CategoryForProdact
+{
+    public long Id { get; init; }
+    public string Name { get; init; }
+}

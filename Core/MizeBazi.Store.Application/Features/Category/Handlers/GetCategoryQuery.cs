@@ -6,13 +6,13 @@ using MizeBazi.Store.Domain;
 namespace MizeBazi.Store.Application;
 
 public class GetCategoryQueryHandler(
-    ICategoryRead dataSource,
-    IAppLogger<GetCategoryQueryHandler> logger
+    ICategoryRead dataSource
+    //IAppLogger<GetCategoryQueryHandler> logger
     ) : QueryBase<GetCategoryQuery, Result<GetCategoryResult>>
 {
 
     public override Task<Result<GetCategoryResult>> Handle(GetCategoryQuery query){
-        query.Check(logger, BrandConstants.ValidatError_Id);
+        query.Check(BrandConstants.ValidatError_Id);
         return dataSource.GetAsync(query);
     }
 }

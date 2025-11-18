@@ -12,7 +12,7 @@ public class AddProducHandler(
 
     public override async Task<Result<long>> Handle(AddProductCommand command, CancellationToken ct)
     {
-        var categories = ProductFactory.Create(command.Id, command.categories);
+        var categories = ProductFactory.Create(1, command.Categories);
         var product = ProductFactory.CreateForAdd(command, categories);
         return await dataSource.AddAsync(product, ct);
     }

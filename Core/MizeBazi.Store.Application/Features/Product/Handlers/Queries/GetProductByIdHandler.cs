@@ -11,6 +11,6 @@ public class GetProductByIdHandler(
 
     public override Task<GetProductResult> Handle(GetProductByIdQuery query){
         query.Check(BrandConstants.ValidatError_Id);
-        return dataSource.GetAsync(query);
+        return dataSource.GetAsync(query.Id, query.UnicId, null);
     }
 }

@@ -1,15 +1,28 @@
-﻿namespace MizeBazi.Store.Common.Shared;
+﻿using static System.Runtime.InteropServices.JavaScript.JSType;
+
+namespace MizeBazi.Store.Common.Shared;
 public record ResultRecord
 {
-    public bool success { get; init; }
-    public int code { get; init; }
-    public string message { get; init; }
+    public bool success { get; init; } = true;
+    public int code { get; init; } = 0;
+    public string message { get; init; } = "";
     public static ResultRecord Failure(string message, int code = -1)
         => new() { success = false, code = code, message = message };
 }
+public record ResultRecord<T>
+{
+    public T data { get; init; }
+    public bool success { get; init; }
+    public int code { get; init; }
+    public string message { get; init; }
+    public static ResultRecord<T> Failure(string message, int code = -1)
+        => new() { success = false, code = code, message = message, data = default };
+    public static ResultRecord<T> Successful(T data, string message = "", int code = 0)
+        => new() { success = true, code = code, message = message, data = data };
+}
 
 
-public class Result
+    public class Result
 {
     public override string ToString()
         => $"{success} - {code} - {(string.IsNullOrWhiteSpace(message) ? string.Empty : $": {message}")}";

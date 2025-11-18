@@ -10,16 +10,18 @@ public class ProductPricing : ValueObject
 
     public decimal DiscountAmount => CompareAtPrice - Price;
 
-    public decimal DiscountPercentage => CompareAtPrice > 0 ? (DiscountAmount / CompareAtPrice) * 100 : 0;
+    public decimal DiscountPercentage => CompareAtPrice > 0 ? Math.Round((DiscountAmount / CompareAtPrice) * 100,2) : 0;
     
     public bool HasDiscount => Price < CompareAtPrice;
 
 
     private ProductPricing(decimal price, decimal compareAtPrice = 0)
     {
-        if (Price < 1)
+        if (price < 1)
             throw new ValidatorException(ProductConstants.Error_Price);
-        if (CompareAtPrice < 0)
+        if (compareAtPrice < 0)
+            throw new ValidatorException(ProductConstants.Error_CompareAtPrice);
+        if(compareAtPrice > 0 && price>= compareAtPrice)
             throw new ValidatorException(ProductConstants.Error_CompareAtPrice);
 
         Price = Math.Round(price);

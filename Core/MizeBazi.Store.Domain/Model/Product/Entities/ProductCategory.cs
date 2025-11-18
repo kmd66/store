@@ -8,6 +8,8 @@ public sealed class ProductCategory //: EventForEntity
     private List<long> _categoryIds { get; set; }
     public IReadOnlyList<long> CategoryIds => _categoryIds.AsReadOnly();
 
+    private const int MaxItem = 5;
+
     public ProductCategory(long productId, List<long> categoryIds)
     {
         if (productId == 0)
@@ -15,7 +17,11 @@ public sealed class ProductCategory //: EventForEntity
         if (categoryIds.Count < 1)
             throw new ValidatorException(ProductConstants.Error_CategoryId);
         ProductId = productId;
-        _categoryIds = categoryIds;
+
+        if (categoryIds.Count > 5)
+            _categoryIds = categoryIds.Take(5).ToList();
+        else
+            _categoryIds = categoryIds;
     }
 
     public bool CategoryIdsEqual(IEnumerable<long> otherCategoryIds)

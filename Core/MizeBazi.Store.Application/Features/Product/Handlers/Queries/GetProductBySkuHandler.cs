@@ -16,7 +16,7 @@ public class GetProductBySkuHandler(
         try
         {
             var sku = Sku.From(query.sku);
-            return await dataSource.GetBySkuAsync(sku.Value); 
+            return await dataSource.GetAsync(null, null, sku.Value); 
         }
         catch (ValidatorException ex)
         {

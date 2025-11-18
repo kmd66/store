@@ -10,19 +10,19 @@ public static class ProductFactory
         Sku sku,
         ProductImages images,
         ProductCategory categories) => Create(0, Guid.NewGuid(), DateTime.UtcNow, basicInfo, pricing, sku, images, categories);
-    public static Product CreateForAdd(dynamic model, ProductCategory categories)
+    public static Product CreateForAdd(dynamic model, ProductCategory categories, long id = 0)
     {
         var basicInfo = BasicInfo(model);
         var pricing = Pricing(model);
         var images = ProductImages.From(model.Images);
-        var sku = Sku.From(model.SKU);
+        var sku = Sku.From(categories.CategoryIds[0], new Random().Next(1, 10000));
 
-        return Create(0, Guid.NewGuid(), DateTime.UtcNow, basicInfo, pricing, sku, images, categories);
+        return Create(id, Guid.NewGuid(), DateTime.UtcNow, basicInfo, pricing, sku, images, categories);
     }
     public static Product CreateForEdite(dynamic model) 
     {
         var categories = Create(1, [1]);
-        return CreateForAdd(model, categories);
+        return CreateForAdd(model, categories, model.Id);
     }
 
     public static Product Create(long id, Guid unicId, DateTime date,
