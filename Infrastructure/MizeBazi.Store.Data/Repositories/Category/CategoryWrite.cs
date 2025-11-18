@@ -46,7 +46,7 @@ public class CategoryWrite(StoreContext context) : ICategoryWrite
             ett.Name = model.Name;
             ett.Description = model.Description;
             ett.ImageUrl = model.ImageUrl;
-            _context.Update(ett);
+            _context.Categorys.Update(ett);
             await _context.SaveChangesAsync();
             return Result.Successful();
 

@@ -46,7 +46,7 @@ public class BrandWrite(StoreContext context) : IBrandWrite
             ett.Name = model.Name;
             ett.Description = model.Description;
             ett.LogoUrl = model.LogoUrl;
-            _context.Update(ett);
+            _context.Brands.Update(ett);
             await _context.SaveChangesAsync();
             return Result.Successful();
 

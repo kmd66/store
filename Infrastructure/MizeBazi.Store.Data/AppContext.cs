@@ -31,6 +31,7 @@ public class StoreContext : DbContext
     internal DbSet<Order> Orders { get; set; }
     internal DbSet<OrderItem> OrderItems { get; set; }
     internal DbSet<Payment> Payments { get; set; }
+    internal DbSet<ProductCategory> ProductCategorys { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 using MizeBazi.Store.Domain;
+using MizeBazi.Store.Common.Helper;
 
 namespace MizeBazi.Store.Data.Entities;
 internal class Product : DbProduct
@@ -9,6 +10,22 @@ internal class Product : DbProduct
     public ICollection<ProductCategory> ProductCategories { get; set; }
     public ICollection<CartItem> CartItems { get; set; }
     public ICollection<OrderItem> OrderItems { get; set; }
+
+    public void DomainProductMap(Domain.Product model)
+    {
+        Name = model.BasicInfo.Name;
+        BrandId = model.BasicInfo.BrandId;
+        Description = model.BasicInfo.Description;
+        Quantity = model.BasicInfo.Quantity;
+        IsPublished = model.BasicInfo.IsPublished;
+
+        Price = model.Pricing.Price;
+        CompareAtPrice = model.Pricing.CompareAtPrice;
+
+        SKU = model.SKU.Value;
+
+        Images = model.Imgs.Images.ToJson();
+    }
 }
 
 internal class ProductConfiguration : IEntityTypeConfiguration<Product>

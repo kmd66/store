@@ -23,11 +23,19 @@ public class AppSaveChanges : SaveChangesInterceptor
                     entity.UnicId = Guid.NewGuid();
             }
 
-            if (entityEntry.State == EntityState.Deleted && entity is SoftDeleteEntity softDeleteEntity)
+            if (entity is SoftDeleteEntity softDeleteEntity)
             {
-                entityEntry.State = EntityState.Modified;
-                softDeleteEntity.IsDeleted = true;
-                softDeleteEntity.DeletedDate = DateTime.UtcNow;
+                if (entityEntry.State == EntityState.Added)
+                {
+                    softDeleteEntity.IsDeleted = false;
+                    softDeleteEntity.DeletedDate = null;
+                }
+                else if (entityEntry.State == EntityState.Deleted)
+                {
+                    entityEntry.State = EntityState.Modified;
+                    softDeleteEntity.IsDeleted = true;
+                    softDeleteEntity.DeletedDate = DateTime.UtcNow;
+                }
             }
         }
     }
