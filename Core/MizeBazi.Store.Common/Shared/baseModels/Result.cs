@@ -4,6 +4,8 @@ public record ResultRecord
     public bool success { get; init; }
     public int code { get; init; }
     public string message { get; init; }
+    public static ResultRecord Failure(string message, int code = -1)
+        => new() { success = false, code = code, message = message };
 }
 
 

@@ -12,22 +12,21 @@ public class Product : AggregateRoot
 
     public ProductImages Imgs { get; private set; }
 
-    private List<ProductCategory> _categories = new();
-    public IReadOnlyList<ProductCategory> Categories => _categories.AsReadOnly();
-    
+    public ProductCategory Categories { get; private set; }
+
     public Product(long id, Guid unicId, DateTime date,
         ProductBasicInfo basicInfo,
         ProductPricing pricing,
         Sku sku,
         ProductImages images,
-        List<ProductCategory> categoryIds
+        ProductCategory categoryIds
         ) : base(id, unicId, date)
     {
         BasicInfo = basicInfo;
         Pricing = pricing;
         SKU = sku;
         Imgs = images;
-        _categories = categoryIds;
+        Categories = categoryIds;
     }
 }
 

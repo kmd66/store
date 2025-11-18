@@ -5,15 +5,56 @@ namespace MizeBazi.Store.Domain;
 public sealed class ProductCategory //: EventForEntity
 {
     public long ProductId { get; private set; }
-    public long CategoryId { get; private set; }
+    private List<long> _categoryIds { get; set; }
+    public IReadOnlyList<long> CategoryIds => _categoryIds.AsReadOnly();
 
-    public ProductCategory(long productId, long categoryId)
+    public ProductCategory(long productId, List<long> categoryIds)
     {
         if (productId == 0)
             throw new ValidatorException(ProductConstants.Error_CategoryProductId);
-        if (categoryId == 0)
+        if (categoryIds.Count < 1)
             throw new ValidatorException(ProductConstants.Error_CategoryId);
         ProductId = productId;
-        CategoryId = categoryId;
+        _categoryIds = categoryIds;
+    }
+
+    public bool CategoryIdsEqual(IEnumerable<long> otherCategoryIds)
+    {
+        if (otherCategoryIds == null)
+            return false;
+
+        return CategoryIds.Count == otherCategoryIds.Count() &&
+               CategoryIds.All(otherCategoryIds.Contains) &&
+               otherCategoryIds.All(CategoryIds.Contains);
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj is not ProductCategory other)
+            return false;
+
+        if (ReferenceEquals(this, other))
+            return true;
+
+        if (GetType() != other.GetType())
+            return false;
+
+        return ProductId == other.ProductId &&
+               CategoryIds.SequenceEqual(other.CategoryIds);
+    }
+
+    public override int GetHashCode()
+    {
+        unchecked
+        {
+            int hash = 17 * 23 + ProductId.GetHashCode();
+
+            foreach (var categoryId in CategoryIds.OrderBy(x => x))
+            {
+                hash = hash * 23 + categoryId.GetHashCode();
+            }
+
+            return hash;
+        }
     }
 }

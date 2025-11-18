@@ -8,6 +8,14 @@ API/
     ├──filemanager/
     └── Security/
 AspNetCoreRateLimit,
+
+-------------------------------------------------
+
+    public DbGetRecord(long? id, Guid? unicId)
+    { چک کردن مقادیر
+        Id= id;
+        UnicId = unicId;
+    }
 -------------------------------------------------
 
  

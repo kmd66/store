@@ -15,7 +15,7 @@ public interface ICommandHandler<TCommand, TResponse> : IRequestHandler<TCommand
     where TCommand : ICommand<TResponse>{}
 public abstract class CommandBase<TCommand, TResponse> : ICommandHandler<TCommand, TResponse> where TCommand : ICommand<TResponse>
 {
-    public virtual Task<TResponse> Handle(TCommand request, CancellationToken cancellationToken)
+    public virtual Task<TResponse> Handle(TCommand request, CancellationToken ct)
     {
         throw new NotImplementedException();
     }
@@ -32,7 +32,7 @@ public interface IQueryHandler<TQuery, TResponse> : IRequestHandler<TQuery, TRes
     where TQuery : IQuery<TResponse>{}
 public abstract class QueryBase<TQuery, TResponse> : IQueryHandler<TQuery, TResponse> where TQuery : IQuery<TResponse>
 {
-    public virtual Task<TResponse> Handle(TQuery request, CancellationToken cancellationToken)
+    public virtual Task<TResponse> Handle(TQuery request, CancellationToken ct)
     {
         throw new NotImplementedException();
     }

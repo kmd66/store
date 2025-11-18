@@ -20,7 +20,7 @@ public class ProductBasicInfo : ValueObject
 
         if (brandId == 0)
             throw new ValidatorException(ProductConstants.Error_BrandId);
-        if (quantity > 0)
+        if (quantity < 0)
             throw new ValidatorException(ProductConstants.Error_Quantity);
 
         return new ProductBasicInfo
