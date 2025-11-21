@@ -38,12 +38,10 @@ flutter
 
 بازی گروهی مافیا. 
 وضعیت: تکمیل 
-nodeJs vue.js 
-تست انلاین http://86.106.142.26/c.html
-
+nodeJs vue.js <br>
 بازی فوتبال. 
 وضعیت: تکمیل
-.net core phaser.js 
+.net core phaser.js <br>
 بازی بیلیارد.
 وضعیت: تکمیل
 .net core phaser.js 
